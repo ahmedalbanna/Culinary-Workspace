@@ -115,6 +115,35 @@ export interface TableUpdate {
   notes?: string;
 }
 
+// ─── Marketing ───────────────────────────────────────────────────────────────
+
+export type OfferChannel = 'sms' | 'email' | 'whatsapp' | 'server-note';
+export type OfferStatus = 'draft' | 'active' | 'paused' | 'expired';
+export type CustomerSegment = 'vip' | 'loyal' | 'new' | 'at-risk' | 'all';
+
+export interface OfferSegmentRule {
+  segment: CustomerSegment;
+  label: string;
+  count: number;
+}
+
+export interface MarketingOffer {
+  id: string;
+  title: string;
+  description: string;
+  discount: number; // percentage
+  channel: OfferChannel;
+  status: OfferStatus;
+  segment: CustomerSegment;
+  createdAt: string;
+  expiresAt: string;
+  sentCount: number;
+  openRate: number;   // 0-100
+  redeemCount: number;
+  targetCount: number;
+  tags: string[];
+}
+
 // ─── Staff ────────────────────────────────────────────────────────────────────
 
 export type StaffRole = 'مدير' | 'رئيس نادل' | 'نادل' | 'طاهٍ' | 'طاهٍ مساعد' | 'استقبال' | 'صراف' | 'نظافة';

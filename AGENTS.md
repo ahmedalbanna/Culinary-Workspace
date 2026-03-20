@@ -181,6 +181,18 @@ We abandon traditional "drop shadows" in favor of **Tonal Layering** and **Ambie
 - **Action confirmations** (cancel, no-show, confirm arrival) should be modals/bottom sheets within the detail page, not separate routes, unless they require a distinct URL for deep-linking.
 - **Flow states** (success screens) can be separate routes (`/reservations/[id]/success`) to allow proper back-navigation handling.
 
+### `create_file` Tool — JSON Truncation Error
+- The `create_file` tool fails with `"Invalid JSON: EOF while parsing an object"` when `initial_content` is omitted entirely from the call (i.e. the tool call object is cut off before the closing brace). This happens when trying to fire too many large file-creation calls simultaneously.
+- **Fix:** Never leave a `create_file` call with no `initial_content` value — always provide the full content. If a batch is getting too long, split into two sequential tool-call groups rather than letting a call be truncated.
+
+### Multiple `globalThis` Stores Pattern
+- When a project grows to multiple domain areas (CRM, Staff, Marketing), avoid cramming all seed data into a single `globalThis` store object — it becomes unwieldy and causes merge conflicts between features.
+- **Pattern used here:** Create a separate store module per domain (`lib/store.ts`, `lib/staff-store.ts`, `lib/marketing-store.ts`), each with its own `globalThis.__culinary<Domain>Store` key. This keeps each file focused, independently testable, and easy to replace with a real DB later.
+
+### `useSearchParams` in Next.js App Router Client Components
+- `useSearchParams()` must be wrapped in `<Suspense>` at the page level when used inside a client component in the App Router, otherwise Next.js throws a build-time error about missing Suspense boundaries.
+- **Fix:** Extract the component using `useSearchParams` into a separate inner component, then wrap it in `<Suspense>` in the default export of the page file.
+
 ---
 
 
