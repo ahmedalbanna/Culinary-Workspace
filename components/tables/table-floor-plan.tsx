@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { RestaurantTable, TableStatus, TableZone } from '@/lib/types';
+import { useRealtime } from '@/hooks/use-realtime';
 
 const STATUS_CONFIG: Record<TableStatus, { label: string; bg: string; text: string; ring: string; dot: string }> = {
   available: { label: 'متاحة', bg: 'bg-green-50', text: 'text-green-800', ring: 'ring-green-200', dot: 'bg-green-500' },
@@ -42,6 +43,18 @@ export function TableFloorPlan({ tables: initialTables, summary: initialSummary 
   const zones: (TableZone | 'all')[] = ['all', 'Main Hall', 'Patio', 'Window', 'Chef Counter'];
 
   const filtered = activeZone === 'all' ? tables : tables.filter(t => t.zone === activeZone);
+
+  // Live updates — update individual table when another tab patches it
+  useRealtime({
+    'table:updated': (updated: RestaurantTable) => {
+      setTables(prev => prev.map(t => t.id === updated.id ? updated : t));
+      setSummary(prev => ({
+        ...prev,
+        available: prev.available + (updated.status === 'available' ? 1 : -1),
+        occupied: prev.occupied + (updated.status === 'occupied' ? 1 : -1),
+      }));
+    },
+  });
 
   const grouped = zones.slice(1).reduce<Record<string, RestaurantTable[]>>((acc, zone) => {
     acc[zone] = filtered.filter(t => t.zone === zone);

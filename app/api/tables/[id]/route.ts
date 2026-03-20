@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getTable, updateTable } from '@/lib/store';
 import { TableUpdate } from '@/lib/types';
+import { sseBus } from '@/lib/sse-bus';
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   const table = getTable(params.id);
@@ -12,5 +13,9 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
   const body = (await request.json()) as TableUpdate;
   const table = updateTable(params.id, body);
   if (!table) return NextResponse.json({ error: 'Table not found.' }, { status: 404 });
+
+  // Broadcast to all connected SSE clients
+  sseBus.emit({ type: 'table:updated', payload: table });
+
   return NextResponse.json({ table });
 }

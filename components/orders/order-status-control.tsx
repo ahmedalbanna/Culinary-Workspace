@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import type { OrderStatus, PaymentMethod } from '@/lib/types';
+import type { Order, OrderStatus, PaymentMethod } from '@/lib/types';
+import { useRealtime } from '@/hooks/use-realtime';
 
 const PAY_METHODS: { value: PaymentMethod; label: string; icon: string }[] = [
   { value: 'cash',      label: 'نقداً',    icon: 'payments' },
@@ -18,6 +19,13 @@ export function OrderStatusControl({ orderId, currentStatus, total }: { orderId:
   const [loading, setLoading] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [payMethod, setPayMethod] = useState<PaymentMethod>('card');
+
+  // Live updates — refresh if this order was updated from another tab
+  useRealtime({
+    'order:updated': (updated: Order) => {
+      if (updated.id === orderId) router.refresh();
+    },
+  });
 
   async function patch(status: OrderStatus) {
     setLoading(true);

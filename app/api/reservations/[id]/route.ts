@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReservation, updateReservation } from '@/lib/store';
 import { ReservationUpdate } from '@/lib/types';
+import { sseBus } from '@/lib/sse-bus';
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   const reservation = getReservation(params.id);

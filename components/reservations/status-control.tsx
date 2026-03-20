@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import type { Reservation } from '@/lib/types';
+import { useRealtime } from '@/hooks/use-realtime';
 
 interface Props {
   reservationId: string;
@@ -15,6 +17,13 @@ export function ReservationStatusControl({ reservationId, guestName, tableLabel 
   const [showCancel, setShowCancel] = useState(false);
   const [showNoShow, setShowNoShow] = useState(false);
   const [cancelReason, setCancelReason] = useState('');
+
+  // Live updates — refresh if this reservation was updated from another tab
+  useRealtime({
+    'reservation:updated': (updated: Reservation) => {
+      if (updated.id === reservationId) router.refresh();
+    },
+  });
 
   async function patch(status: string) {
     setLoading(status);
