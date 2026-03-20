@@ -1,4 +1,4 @@
-import type { Order, OrderStatus } from '@/lib/types';
+import type { Order, OrderStatus, OrderLineItem } from '@/lib/types';
 
 interface OrdersStore { orders: Order[] }
 
@@ -152,6 +152,42 @@ export function getOrdersSummary() {
     totalRevenue: orders.filter(o => o.status === 'paid').reduce((s, o) => s + o.total, 0),
     avgOrderValue: orders.length ? Math.round(orders.reduce((s, o) => s + o.total, 0) / orders.length) : 0,
   };
+}
+
+export function updateOrderItems(
+  id: string,
+  items: OrderLineItem[]
+): Order | undefined {
+  const store = initOrdersStore();
+  const order = store.orders.find(o => o.id === id);
+  if (!order) return undefined;
+  order.items = items;
+  // Recalculate totals
+  const subtotal = items.reduce((s, i) => s + i.unitPrice * i.quantity, 0);
+  const tax      = Math.round(subtotal * 0.05 * 100) / 100;
+  order.subtotal = Math.round(subtotal * 100) / 100;
+  order.tax      = tax;
+  order.total    = Math.round((subtotal + tax - order.discount) * 100) / 100;
+  return clone(order);
+}
+
+export function addOrderItem(id: string, item: Omit<OrderLineItem, 'id'>): Order | undefined {
+  const store = initOrdersStore();
+  const order = store.orders.find(o => o.id === id);
+  if (!order) return undefined;
+  // Merge with existing if same item name
+  const existing = order.items.find(i => i.name === item.name);
+  if (existing) {
+    existing.quantity += item.quantity;
+  } else {
+    order.items.push({ ...item, id: `li_${Date.now()}` });
+  }
+  const subtotal = order.items.reduce((s, i) => s + i.unitPrice * i.quantity, 0);
+  const tax      = Math.round(subtotal * 0.05 * 100) / 100;
+  order.subtotal = Math.round(subtotal * 100) / 100;
+  order.tax      = tax;
+  order.total    = Math.round((subtotal + tax - order.discount) * 100) / 100;
+  return clone(order);
 }
 
 export function getTopItems() {
