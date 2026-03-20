@@ -280,6 +280,26 @@ export interface NewCustomerInput {
   birthday?: string;
 }
 
+export interface CustomerUpdate {
+  name?: string;
+  phone?: string;
+  email?: string;
+  tier?: 'VIP' | 'Loyal' | 'New';
+  notes?: string;
+  birthday?: string;
+  allergies?: string[];
+  preferences?: { label: string; detail: string }[];
+  favoriteTable?: string;
+}
+
+export function updateCustomer(id: string, update: CustomerUpdate): Customer | undefined {
+  const store = initStore();
+  const customer = store.customers.find(c => c.id === id);
+  if (!customer) return undefined;
+  Object.assign(customer, update);
+  return clone(customer);
+}
+
 export function createCustomer(input: NewCustomerInput): Customer {
   const store = initStore();
   const id = `cust_${Date.now()}`;
