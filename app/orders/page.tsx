@@ -1,166 +1,157 @@
-import { listCustomers } from '@/lib/store';
+import { listOrders, getOrdersSummary, getTopItems } from '@/lib/orders-store';
 import Link from 'next/link';
 
-const statusLabels: Record<string, string> = { pending: 'معلق', preparing: 'قيد التحضير', served: 'قُدِّم', paid: 'مدفوع' };
-const statusChip: Record<string, string> = {
-  pending: 'bg-yellow-100 text-yellow-800',
-  preparing: 'bg-primary-container text-primary',
-  served: 'bg-green-100 text-green-800',
-  paid: 'bg-surface-container text-on-surface-variant',
+const STATUS_CONFIG: Record<string, { label: string; color: string; dot: string }> = {
+  open:       { label: 'مفتوح',    color: 'bg-primary-container text-on-primary-container', dot: 'bg-primary animate-pulse' },
+  served:     { label: 'تم التقديم', color: 'bg-blue-100 text-blue-700',                    dot: 'bg-blue-500' },
+  paid:       { label: 'مدفوع',    color: 'bg-green-100 text-green-700',                    dot: 'bg-green-500' },
+  cancelled:  { label: 'ملغي',     color: 'bg-error-container text-error',                  dot: 'bg-error' },
+  refunded:   { label: 'مُسترد',   color: 'bg-zinc-100 text-zinc-500',                      dot: 'bg-zinc-400' },
 };
 
-// Derive orders from customer history for realistic seed data
-function buildOrders(customers: ReturnType<typeof listCustomers>) {
-  const statuses = ['paid', 'served', 'preparing', 'pending'] as const;
-  return customers.flatMap((customer, ci) =>
-    customer.orderHistory.map((order, oi) => ({
-      id: order.id,
-      customerId: customer.id,
-      customerName: customer.name,
-      customerTier: customer.tier,
-      date: order.date,
-      total: order.total,
-      items: order.items,
-      status: statuses[(ci + oi) % statuses.length],
-      tableLabel: ['M2', 'P1', 'W4', 'C1', 'M6'][(ci + oi) % 5],
-    }))
-  );
-}
+const PAY_ICON: Record<string, string> = {
+  cash: 'payments', card: 'credit_card', 'apple-pay': 'phone_iphone', split: 'call_split',
+};
+
+const fmt = (n: number) => new Intl.NumberFormat('ar-AE', { style: 'currency', currency: 'AED', maximumFractionDigits: 0 }).format(n);
 
 export default function OrdersPage() {
-  const customers = listCustomers();
-  const orders = buildOrders(customers);
-
-  const totalRevenue = orders.reduce((s, o) => s + o.total, 0);
-  const avgOrder = Math.round(totalRevenue / (orders.length || 1));
+  const orders = listOrders();
+  const summary = getOrdersSummary();
+  const topItems = getTopItems();
 
   return (
-    <div className="max-w-screen-xl mx-auto space-y-8">
-
-      {/* Header */}
-      <header className="page-header">
+    <div className="space-y-10">
+      <header className="flex justify-between items-end flex-wrap gap-4">
         <div>
-          <h2 className="page-title">الطلبات</h2>
-          <p className="page-subtitle">تتبع الطلبات النشطة وتاريخ المبيعات المرتبط بالعملاء</p>
-        </div>
-        <div className="flex gap-3">
-          <button className="btn-secondary">
-            <span className="material-symbols-outlined text-base">download</span>
-            تصدير
-          </button>
+          <h2 className="display-md">الطلبات</h2>
+          <p className="body-md text-on-surface-variant">تاريخ الطلبات وتحليلات الإنفاق والأطباق الأكثر طلباً</p>
         </div>
       </header>
 
-      {/* KPI strip */}
-      <div className="metrics-grid">
+      {/* KPIs */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'إجمالي الطلبات', value: orders.length, icon: 'receipt_long', color: 'text-primary' },
-          { label: 'إجمالي الإيرادات', value: `${totalRevenue.toLocaleString('ar')} د.إ`, icon: 'payments', color: 'text-green-700' },
-          { label: 'متوسط الطلب', value: `${avgOrder.toLocaleString('ar')} د.إ`, icon: 'bar_chart', color: 'text-secondary' },
-          { label: 'قيد التحضير', value: orders.filter(o => o.status === 'preparing').length, icon: 'skillet', color: 'text-yellow-700' },
-        ].map(m => (
-          <div key={m.label} className="metric-card">
-            <div className="flex justify-between items-start mb-3">
-              <span className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">{m.label}</span>
-              <span className={`material-symbols-outlined text-xl ${m.color}`}>{m.icon}</span>
+          { label: 'طلبات مفتوحة',    value: summary.openOrders,    icon: 'receipt',        color: 'text-primary bg-primary-container/40' },
+          { label: 'طلبات اليوم',     value: summary.todayOrders,   icon: 'today',          color: 'text-blue-700 bg-blue-50' },
+          { label: 'إيراد اليوم',     value: fmt(summary.todayRevenue), icon: 'payments',   color: 'text-green-700 bg-green-100' },
+          { label: 'متوسط قيمة الطلب', value: fmt(summary.avgOrderValue), icon: 'equalizer', color: 'text-amber-700 bg-amber-100' },
+        ].map(item => (
+          <div key={item.label} className="card surface-container-lowest p-5 flex gap-4 items-center">
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${item.color}`}>
+              <span className="material-symbols-outlined">{item.icon}</span>
             </div>
-            <p className="text-2xl font-extrabold text-on-surface tracking-tight">{m.value}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Filter bar */}
-      <div className="card-low p-3 sm:p-4 flex flex-col sm:flex-row gap-3 sm:items-center">
-        <div className="relative flex-1">
-          <span className="material-symbols-outlined absolute start-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-          <input type="text" placeholder="ابحث بالاسم أو رقم الطاولة..." className="input-field ps-10 py-2.5 text-sm" />
-        </div>
-        <div className="flex gap-2 flex-wrap">
-          {['الكل', 'معلق', 'قيد التحضير', 'قُدِّم', 'مدفوع'].map((s, i) => (
-            <button key={s} className={`px-4 py-2 rounded-full text-xs font-bold transition-colors ${i === 0 ? 'bg-primary text-white' : 'bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high'}`}>{s}</button>
-          ))}
-        </div>
-      </div>
-
-      {/* Orders list — card on mobile, table on desktop */}
-      <div className="sm:hidden space-y-3">
-        {orders.map(order => (
-          <div key={order.id} className="card p-4 space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary font-black flex-shrink-0">
-                  {order.customerName.charAt(0)}
-                </div>
-                <div>
-                  <p className="font-bold text-sm">{order.customerName}</p>
-                  <p className="text-xs text-on-surface-variant">طاولة {order.tableLabel} • {order.date}</p>
-                </div>
-              </div>
-              <span className={`text-[10px] font-black px-2.5 py-1 rounded-full uppercase ${statusChip[order.status]}`}>{statusLabels[order.status]}</span>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {order.items.map(item => (
-                <span key={item.name} className="px-2.5 py-1 bg-surface-container rounded-full text-xs font-medium">{item.quantity}× {item.name}</span>
-              ))}
-            </div>
-            <div className="flex justify-between items-center pt-2 border-t border-outline-variant/30">
-              <span className="text-xs text-on-surface-variant">رقم الطلب: {order.id}</span>
-              <span className="font-extrabold text-primary">{order.total.toLocaleString('ar')} د.إ</span>
+            <div>
+              <p className="text-xs text-on-surface-variant">{item.label}</p>
+              <p className="headline-sm">{item.value}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="hidden sm:block card overflow-hidden">
-        <table className="w-full text-right">
-          <thead>
-            <tr className="bg-surface-container-low">
-              {['العميل', 'الطاولة', 'الأصناف', 'التاريخ', 'الإجمالي', 'الحالة', ''].map(h => (
-                <th key={h} className="px-5 py-4 text-xs text-on-surface-variant font-black uppercase tracking-wider whitespace-nowrap">{h}</th>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Orders list */}
+        <div className="lg:col-span-2 space-y-4">
+          <div className="flex justify-between items-center flex-wrap gap-3">
+            <h3 className="headline-sm">سجل الطلبات</h3>
+            <div className="flex gap-2 flex-wrap">
+              {['الكل', 'مفتوح', 'مدفوع', 'ملغي'].map((f, i) => (
+                <button key={f} className={`px-4 py-1.5 rounded-full text-sm font-bold transition-colors ${i === 0 ? 'bg-primary text-on-primary' : 'bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container-high'}`}>
+                  {f}
+                </button>
               ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-outline-variant/20">
-            {orders.map(order => (
-              <tr key={order.id} className="hover:bg-surface-container-low transition-colors group">
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-primary font-black flex-shrink-0">
-                      {order.customerName.charAt(0)}
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            {orders.map(order => {
+              const sc = STATUS_CONFIG[order.status];
+              return (
+                <Link
+                  key={order.id}
+                  href={`/orders/${order.id}` as any}
+                  className="card surface-container-lowest p-5 flex items-center gap-5 hover:translate-y-[-2px] transition-transform group"
+                >
+                  {/* Status dot */}
+                  <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${sc.dot}`} />
+
+                  {/* Guest + table */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-bold truncate">{order.guestName}</h4>
+                      {order.notes && <span className="material-symbols-outlined text-primary text-sm" title={order.notes}>sticky_note_2</span>}
                     </div>
-                    <div>
-                      <p className="font-bold text-sm">{order.customerName}</p>
-                      {order.customerTier === 'VIP' && (
-                        <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-primary-container text-primary uppercase">VIP</span>
-                      )}
-                    </div>
+                    <p className="text-xs text-on-surface-variant">
+                      {order.date} {order.time} · طاولة {order.tableLabel} · {order.partySize} أفراد
+                    </p>
                   </div>
-                </td>
-                <td className="px-5 py-4">
-                  <span className="font-bold text-sm bg-surface-container px-3 py-1 rounded-full">{order.tableLabel}</span>
-                </td>
-                <td className="px-5 py-4">
-                  <div className="flex flex-wrap gap-1">
-                    {order.items.slice(0, 2).map(item => (
-                      <span key={item.name} className="px-2 py-0.5 bg-surface-container rounded-full text-xs text-on-surface-variant">{item.quantity}× {item.name}</span>
+
+                  {/* Item emojis */}
+                  <div className="hidden md:flex -space-x-1 space-x-reverse">
+                    {order.items.slice(0, 4).map(item => (
+                      <div key={item.id} className="w-8 h-8 rounded-full bg-surface-container border-2 border-white flex items-center justify-center text-sm shadow-sm" title={item.nameAr}>
+                        {item.emoji}
+                      </div>
                     ))}
-                    {order.items.length > 2 && <span className="text-xs text-on-surface-variant">+{order.items.length - 2}</span>}
+                    {order.items.length > 4 && (
+                      <div className="w-8 h-8 rounded-full bg-surface-container border-2 border-white flex items-center justify-center text-[10px] font-bold text-on-surface-variant shadow-sm">
+                        +{order.items.length - 4}
+                      </div>
+                    )}
                   </div>
-                </td>
-                <td className="px-5 py-4 text-sm text-on-surface-variant">{order.date}</td>
-                <td className="px-5 py-4 font-extrabold text-primary">{order.total.toLocaleString('ar')} د.إ</td>
-                <td className="px-5 py-4">
-                  <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase ${statusChip[order.status]}`}>{statusLabels[order.status]}</span>
-                </td>
-                <td className="px-5 py-4">
-                  <Link href={`/customers/${order.customerId}` as any} className="text-on-surface-variant hover:text-primary transition-colors">
-                    <span className="material-symbols-outlined">arrow_back</span>
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+                  {/* Total + status */}
+                  <div className="text-left flex-shrink-0 space-y-1">
+                    <p className="font-black text-primary">{fmt(order.total)}</p>
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-black block text-center ${sc.color}`}>
+                      {sc.label}
+                    </span>
+                  </div>
+
+                  <span className="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">chevron_left</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Right panel: Top items + revenue */}
+        <div className="space-y-6">
+          <div className="card surface-container-lowest p-6 space-y-5">
+            <h3 className="title-lg flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary">emoji_food_beverage</span>
+              الأطباق الأكثر طلباً
+            </h3>
+            <div className="space-y-4">
+              {topItems.map((item, idx) => (
+                <div key={item.name} className="flex items-center gap-4">
+                  <div className="w-9 h-9 rounded-xl bg-surface-container flex items-center justify-center text-xl flex-shrink-0">
+                    {item.emoji}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-sm truncate">{item.nameAr}</p>
+                    <div className="h-1.5 bg-surface-container rounded-full mt-1 overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{ width: `${Math.round((item.count / topItems[0].count) * 100)}%`, background: `linear-gradient(90deg,#944A00,#E67E22)`, opacity: 1 - idx * 0.15 }}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-left flex-shrink-0">
+                    <p className="font-black text-sm">{item.count}x</p>
+                    <p className="text-[10px] text-on-surface-variant">{fmt(item.revenue)}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="card p-6 space-y-4" style={{ background: 'linear-gradient(135deg,rgba(148,74,0,0.08),rgba(230,126,34,0.05))' }}>
+            <h3 className="title-lg">الإيراد الإجمالي</h3>
+            <p className="display-md text-primary">{fmt(summary.totalRevenue)}</p>
+            <p className="text-sm text-on-surface-variant">من {orders.filter(o => o.status === 'paid').length} طلب مدفوع</p>
+          </div>
+        </div>
       </div>
     </div>
   );

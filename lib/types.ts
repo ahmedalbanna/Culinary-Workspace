@@ -115,6 +115,45 @@ export interface TableUpdate {
   notes?: string;
 }
 
+// ─── Orders ──────────────────────────────────────────────────────────────────
+
+export type OrderStatus = 'open' | 'served' | 'paid' | 'cancelled' | 'refunded';
+export type PaymentMethod = 'cash' | 'card' | 'apple-pay' | 'split';
+
+export interface OrderLineItem {
+  id: string;
+  name: string;
+  nameAr: string;
+  category: string;
+  quantity: number;
+  unitPrice: number;
+  note?: string;
+  emoji: string;
+}
+
+export interface Order {
+  id: string;
+  customerId: string;
+  guestName: string;
+  tableLabel: string;
+  zone: TableZone;
+  date: string;
+  time: string;
+  partySize: number;
+  status: OrderStatus;
+  items: OrderLineItem[];
+  subtotal: number;
+  tax: number;
+  discount: number;
+  total: number;
+  paymentMethod?: PaymentMethod;
+  reservationId?: string;
+  serverId: string;      // staff id
+  serverName: string;
+  paidAt?: string;
+  notes?: string;
+}
+
 // ─── Marketing ───────────────────────────────────────────────────────────────
 
 export type OfferChannel = 'sms' | 'email' | 'whatsapp' | 'server-note';
