@@ -197,6 +197,24 @@ We abandon traditional "drop shadows" in favor of **Tonal Layering** and **Ambie
 ### `find_and_replace_code` — Exact Whitespace Matching
 - `find_and_replace_code` requires an **exact character-for-character match** including trailing whitespace and newline style. Even a single extra newline or missing space causes `No matches found`.
 - **Fix:** Before doing a large replacement on a file you haven't recently viewed, use `expand_code_chunks` on the target line range first to confirm the exact text. Alternatively, keep `find` strings short and anchor to a unique surrounding line to reduce mismatch risk.
+- **Large file complete rewrites:** When a component needs a complete rewrite (100+ lines changing), use `create_file` with `overwrite: true` instead of `find_and_replace_code`. This avoids JSON truncation from large `find` strings and is more reliable.
+- **`bash` fallback for file surgery:** When `find_and_replace_code` can't match a large block and `create_file` would be too big, use `bash` with `head -N file > /tmp/out.txt && cat >> /tmp/out.txt << 'EOF' ... EOF && cp /tmp/out.txt file` to truncate and rewrite from a known line number.
+
+### `useRealtime` + `useCallback` Pattern
+- Callbacks passed to `useRealtime` **must** be wrapped in `useCallback` to avoid stale closures and infinite re-render loops. The hook stores a ref to handlers, but the dependency array still matters.
+- **Pattern:** Always define handlers with `useCallback` before passing to `useRealtime`:
+  ```ts
+  const handleOrderUpdate = useCallback((payload: unknown) => {
+    const order = payload as Order;
+    setOrders(prev => prev.map(o => o.id === order.id ? order : o));
+  }, []); // stable deps only
+  useRealtime({ 'order:updated': handleOrderUpdate });
+  ```
+
+### Interactive Modal Pattern (click-to-action from list/grid)
+- For "click item → action modal" patterns (e.g. click table → seat guest modal), use a `useState<Item | null>(null)` to track the selected item and render the modal conditionally at the bottom of the component.
+- Always stop event propagation (`e.stopPropagation()`) on quick-action buttons inside clickable cards to prevent the card click from firing.
+- Modals with blur backdrop: `style={{ background: 'rgba(25,28,29,0.5)', backdropFilter: 'blur(4px)' }}` + click-outside handler on the backdrop div.
 
 ### Import Placement in TypeScript/Next.js Files
 - All `import` statements must appear at the **top of the file**, before any function or component definitions. Placing an import after a component (e.g. at the bottom as an afterthought) causes a TypeScript/build error.
