@@ -1,0 +1,360 @@
+:root {
+  --background: #f8f9fa;
+  --surface-low: #f3f4f5;
+  --surface-lowest: #ffffff;
+  --surface-highest: #e8ebed;
+  --text: #191c1d;
+  --text-muted: #5d6468;
+  --primary: #944a00;
+  --primary-2: #e67e22;
+  --primary-fixed: #ffdcc5;
+  --secondary-fixed: #d7eadf;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --shadow: 0 20px 40px rgba(25, 28, 29, 0.06);
+  --radius-lg: 1.5rem;
+  --radius-md: 1rem;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top right, rgba(255, 220, 197, 0.8), transparent 24%),
+    linear-gradient(180deg, #fbf7f2 0%, var(--background) 34%, #f4f5f6 100%);
+  color: var(--text);
+  font-family: "Plus Jakarta Sans", "Tajawal", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.shell {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.hero-card,
+.panel,
+.metric-card,
+.reservation-card,
+.list-card,
+.offer-card,
+.focus-card {
+  border: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.hero-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(148, 74, 0, 0.95), rgba(230, 126, 34, 0.82));
+  color: white;
+}
+
+.hero-card h1,
+.panel h2 {
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.hero-copy {
+  max-width: 48rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.72;
+}
+
+.metrics-grid,
+.content-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.metrics-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.content-grid {
+  grid-template-columns: 1.3fr 0.9fr;
+  align-items: start;
+}
+
+.stack,
+.list-stack,
+.guest-focus {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.metric-card,
+.panel {
+  padding: 1.5rem;
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.metric-label,
+.subtle,
+.offer-meta,
+.reservation-meta {
+  color: var(--text-muted);
+}
+
+.surface-low {
+  background: var(--surface-low);
+}
+
+.surface-lowest {
+  background: var(--surface-lowest);
+}
+
+.panel-header,
+.list-topline,
+.reservation-topline,
+.offer-meta,
+.status-row,
+.status-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.pill,
+.tier-badge,
+.status-chip,
+.mini-button {
+  border-radius: var(--radius-pill);
+  padding: 0.5rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.pill.soft {
+  background: rgba(255, 255, 255, 0.2);
+  color: inherit;
+}
+
+.pill.warm {
+  background: rgba(255, 220, 197, 0.28);
+  color: white;
+}
+
+.tier-badge {
+  background: var(--primary-fixed);
+  color: var(--primary);
+}
+
+.tier-loyal {
+  background: #eef4d9;
+  color: #4d5f16;
+}
+
+.tier-new {
+  background: #e2eef7;
+  color: #0a5675;
+}
+
+.status-chip {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.status-confirmed {
+  color: var(--primary);
+}
+
+.status-seated {
+  color: #1f6d4d;
+}
+
+.status-completed {
+  color: #3b4850;
+}
+
+.status-waitlist {
+  color: var(--error);
+  background: var(--error-container);
+}
+
+.reservation-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.reservation-card,
+.list-card,
+.offer-card,
+.focus-card {
+  background: var(--surface-lowest);
+  padding: 1.1rem;
+}
+
+.reservation-card {
+  text-align: left;
+  transition: transform 140ms ease, background-color 140ms ease;
+}
+
+.reservation-card:hover,
+.reservation-card.active {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(255, 220, 197, 0.42));
+}
+
+.reservation-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin: 0.5rem 0;
+  font-size: 0.92rem;
+}
+
+.reservation-form {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.reservation-form label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--text-muted);
+}
+
+.reservation-form input,
+.reservation-form select,
+.reservation-form textarea {
+  width: 100%;
+  border: 0;
+  border-radius: 1rem;
+  background: var(--surface-highest);
+  padding: 0.9rem 1rem;
+  color: var(--text);
+  outline: 2px solid transparent;
+  transition: outline-color 160ms ease, transform 160ms ease;
+}
+
+.reservation-form input:focus,
+.reservation-form select:focus,
+.reservation-form textarea:focus {
+  outline-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.full-span {
+  grid-column: 1 / -1;
+}
+
+.primary-button,
+.mini-button.selected {
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: white;
+  border: 0;
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow);
+}
+
+.primary-button:disabled {
+  opacity: 0.7;
+}
+
+.clean-list {
+  margin: 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.list-card p,
+.offer-card p,
+.focus-card p,
+.reservation-card p {
+  margin-bottom: 0;
+}
+
+.mini-button {
+  border: 0;
+  background: var(--surface-highest);
+  color: var(--text);
+}
+
+@media (max-width: 1100px) {
+  .metrics-grid,
+  .content-grid,
+  .reservation-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .shell {
+    padding: 1rem;
+  }
+
+  .hero-card,
+  .metrics-grid,
+  .reservation-form {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card {
+    flex-direction: column;
+  }
+
+  .metrics-grid {
+    display: grid;
+  }
+}
