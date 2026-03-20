@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>تقارير أداء الموظف</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Tajawal:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#f8f9fa",
+              "on-tertiary-fixed-variant": "#004c6d",
+              "surface-variant": "#e1e3e4",
+              "on-error-container": "#93000a",
+              "on-tertiary-fixed": "#001e2e",
+              "on-background": "#191c1d",
+              "primary-fixed": "#ffdcc5",
+              "outline-variant": "#dcc1b1",
+              "on-primary-fixed-variant": "#713700",
+              "error-container": "#ffdad6",
+              "surface-container-highest": "#e1e3e4",
+              "outline": "#897365",
+              "on-surface": "#191c1d",
+              "on-secondary-fixed": "#091d2e",
+              "error": "#ba1a1a",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#502600",
+              "inverse-on-surface": "#f0f1f2",
+              "tertiary-fixed-dim": "#86cfff",
+              "tertiary-fixed": "#c7e7ff",
+              "tertiary-container": "#00a3e4",
+              "secondary-container": "#cfe2f9",
+              "inverse-surface": "#2e3132",
+              "surface-tint": "#944a00",
+              "on-primary": "#ffffff",
+              "primary": "#944a00",
+              "secondary-fixed": "#d1e4fb",
+              "on-surface-variant": "#564337",
+              "primary-container": "#e67e22",
+              "background": "#f8f9fa",
+              "on-secondary": "#ffffff",
+              "surface-container": "#edeeef",
+              "on-primary-fixed": "#301400",
+              "secondary": "#4e6073",
+              "tertiary": "#00658f",
+              "surface-dim": "#d9dadb",
+              "primary-fixed-dim": "#ffb783",
+              "on-error": "#ffffff",
+              "inverse-primary": "#ffb783",
+              "surface-bright": "#f8f9fa",
+              "on-tertiary-container": "#00354d",
+              "on-secondary-fixed-variant": "#36485b",
+              "surface-container-high": "#e7e8e9",
+              "on-secondary-container": "#526478",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-low": "#f3f4f5",
+              "secondary-fixed-dim": "#b5c8df"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans", "Tajawal"],
+              "body": ["Plus Jakarta Sans", "Tajawal"],
+              "label": ["Plus Jakarta Sans", "Tajawal"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "1rem", "xl": "1.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Tajawal', 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="bg-[#F8F9FA] dark:bg-slate-900 w-full top-0 sticky z-40 flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="hover:bg-orange-50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#944A00]">arrow_forward</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans','Tajawal'] font-bold text-on-surface text-xl">تقرير أداء الموظف</h1>
+</div>
+<button class="hover:bg-orange-50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-500">more_vert</span>
+</button>
+</header>
+<main class="max-w-5xl mx-auto px-6 py-8">
+<!-- Profile Bento Section -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- Main Profile Card -->
+<div class="lg:col-span-2 bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.04)] flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-32 h-32 bg-primary-fixed/30 rounded-full -translate-x-16 -translate-y-16 blur-3xl"></div>
+<div class="relative">
+<img class="w-32 h-32 rounded-full object-cover border-4 border-primary-fixed" data-alt="Professional portrait of a male floor manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3zh2SCeZXB4sT5ZC3YwFn0n_FiGRomR9memaJYQOwU3WHtCfQfyYL8Ta-wZUD0tVOSnvxpp_82zfckYwrlx_B3MkKQK56stT4GXkQfWB2LiVGSdnc-MvhWMausOds7qMcFMOwdDE8W6fxvlHp1HQLCpZOeAbq_UeFP5vconWvwxcamR0dZbtnOgrQ9kty45p4WWaIpNwlS_YJbxFtdiBMMRsA7egaNCMv7AKd5wvt-uOy3nrYmTh7fmi7mUtgfh2J97w4EuA3QAU"/>
+<div class="absolute bottom-1 right-1 bg-primary text-white p-1.5 rounded-full border-2 border-white">
+<span class="material-symbols-outlined text-[16px] block" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="flex-1 text-center md:text-right space-y-2">
+<h2 class="text-3xl font-bold text-on-surface tracking-tight">أحمد منصور</h2>
+<p class="text-on-secondary-fixed-variant font-medium">مدير الصالة (Floor Manager)</p>
+<div class="flex items-center justify-center md:justify-start gap-2 mt-4">
+<div class="flex items-center bg-primary-fixed px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-primary text-sm mr-1" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-on-primary-fixed-variant font-bold">4.8</span>
+</div>
+<span class="text-on-surface-variant text-sm">(120 تقييم)</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 w-full md:w-auto">
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-6 py-3 rounded-full font-bold shadow-lg shadow-primary/20 active:scale-95 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">edit</span>
+                        تعديل الأهداف
+                    </button>
+<button class="bg-secondary-container text-on-secondary-container px-6 py-3 rounded-full font-bold active:scale-95 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+                        تصدير PDF
+                    </button>
+</div>
+</div>
+<!-- Quick Action / Commendation -->
+<div class="bg-primary text-on-primary p-8 rounded-xl flex flex-col justify-between items-center text-center">
+<span class="material-symbols-outlined text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<h3 class="text-xl font-bold mb-2">إرسال تقدير</h3>
+<p class="text-primary-fixed text-sm mb-6">كافئ أحمد على أدائه المتميز هذا الشهر</p>
+<button class="w-full bg-white text-primary py-3 rounded-full font-bold hover:bg-primary-fixed transition-colors">
+                    إرسال الآن
+                </button>
+</div>
+</section>
+<!-- Stats Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="bg-surface-container-low p-6 rounded-xl border-b-4 border-primary">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 bg-primary-fixed rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">event_available</span>
+</div>
+<span class="text-xs font-bold text-primary px-2 py-1 bg-primary-fixed rounded">+2%</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-1">معدل الحضور</p>
+<h4 class="text-2xl font-extrabold text-on-surface">98.5%</h4>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border-b-4 border-tertiary-container">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 bg-tertiary-fixed rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">sentiment_satisfied</span>
+</div>
+<span class="text-xs font-bold text-tertiary px-2 py-1 bg-tertiary-fixed rounded">مستقر</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-1">مؤشر رضا العملاء</p>
+<h4 class="text-2xl font-extrabold text-on-surface">4.9/5</h4>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border-b-4 border-secondary">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 bg-secondary-fixed rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<span class="text-xs font-bold text-on-error px-2 py-1 bg-error rounded">-5%</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-1">تحقيق مبيعات الهدف</p>
+<h4 class="text-2xl font-extrabold text-on-surface">92%</h4>
+</div>
+</section>
+<!-- Charts & Content Shell -->
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+<!-- Performance Trends -->
+<div class="lg:col-span-3 space-y-8">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-lg font-bold">اتجاهات الأداء (3 أشهر)</h3>
+<select class="bg-surface border-none text-sm rounded-lg focus:ring-primary">
+<option>كافة المؤشرات</option>
+<option>المبيعات</option>
+<option>الرضا</option>
+</select>
+</div>
+<!-- Simplified Visual Chart Representation -->
+<div class="relative h-48 w-full flex items-end gap-2 px-2">
+<div class="absolute inset-0 flex flex-col justify-between opacity-10 pointer-events-none">
+<div class="border-b border-on-surface w-full"></div>
+<div class="border-b border-on-surface w-full"></div>
+<div class="border-b border-on-surface w-full"></div>
+<div class="border-b border-on-surface w-full"></div>
+</div>
+<!-- October -->
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary-fixed rounded-t-md group-hover:bg-primary transition-colors h-[60%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded hidden group-hover:block">85%</div>
+</div>
+<span class="text-xs text-on-surface-variant font-medium">أكتوبر</span>
+</div>
+<!-- November -->
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary-fixed rounded-t-md group-hover:bg-primary transition-colors h-[85%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded hidden group-hover:block">95%</div>
+</div>
+<span class="text-xs text-on-surface-variant font-medium">نوفمبر</span>
+</div>
+<!-- December -->
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary-container rounded-t-md group-hover:bg-primary transition-colors h-[75%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded hidden group-hover:block">90%</div>
+</div>
+<span class="text-xs text-on-surface font-bold">ديسمبر</span>
+</div>
+</div>
+</div>
+<!-- Recent Feedback Feed -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+<h3 class="text-lg font-bold mb-6">آراء العملاء الأخيرة</h3>
+<div class="space-y-6">
+<div class="flex gap-4 p-4 rounded-xl bg-surface-container-low transition-colors hover:bg-orange-50/50">
+<div class="w-12 h-12 bg-secondary-fixed rounded-full flex items-center justify-center shrink-0">
+<span class="font-bold text-on-secondary-fixed">م.س</span>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between">
+<h4 class="font-bold text-sm">محمد سالم</h4>
+<span class="text-[10px] text-on-surface-variant">منذ يومين</span>
+</div>
+<div class="flex text-primary">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-sm text-on-surface leading-relaxed italic">"كانت الخدمة مذهلة، <span class="font-bold text-primary">أحمد منصور</span> جعل تجربتنا استثنائية بفضل سرعته واحترافه في إدارة طلباتنا."</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-xl bg-surface-container-low transition-colors hover:bg-orange-50/50">
+<div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center shrink-0">
+<span class="font-bold text-on-primary-fixed">ل.ع</span>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between">
+<h4 class="font-bold text-sm">ليلى عبدالله</h4>
+<span class="text-[10px] text-on-surface-variant">منذ ٤ أيام</span>
+</div>
+<div class="flex text-primary">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xs">star</span>
+</div>
+<p class="text-sm text-on-surface leading-relaxed italic">"المكان منظم جداً والمدير <span class="font-bold text-primary">أحمد</span> متعاون للغاية."</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 text-primary font-bold text-sm border border-primary/20 rounded-xl hover:bg-primary-fixed/30 transition-colors">عرض جميع التعليقات</button>
+</div>
+</div>
+<!-- Sidebar / Details -->
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-surface-container-high">
+<h3 class="text-md font-bold mb-4 border-r-4 border-primary pr-3">المعلومات المهنية</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-2 border-b border-surface-container">
+<span class="text-on-surface-variant text-sm">تاريخ الانضمام</span>
+<span class="font-bold text-sm">15 يناير 2021</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-container">
+<span class="text-on-surface-variant text-sm">الوردية الحالية</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-xs font-bold">المسائية</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-container">
+<span class="text-on-surface-variant text-sm">ساعات العمل/أسبوع</span>
+<span class="font-bold text-sm">42 ساعة</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-on-surface-variant text-sm">الحالة</span>
+<span class="flex items-center gap-1.5 text-success text-xs font-bold text-emerald-600">
+<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                متواجد حالياً
+                            </span>
+</div>
+</div>
+</div>
+<!-- Skills & Competencies -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-surface-container-high">
+<h3 class="text-md font-bold mb-4 border-r-4 border-primary pr-3">الجدارة والمهارات</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>القيادة وإدارة الفريق</span>
+<span class="font-bold">95%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[95%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>التعامل مع الشكاوى</span>
+<span class="font-bold">88%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[88%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>سرعة الاستجابة</span>
+<span class="font-bold">92%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[92%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 shadow-[0_-4px_20px_rgba(25,28,29,0.04)]">
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-2 hover:text-[#E67E22] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[11px] font-['Tajawal'] font-medium">الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-2 hover:text-[#E67E22] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[11px] font-['Tajawal'] font-medium">الحجوزات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-2 hover:text-[#E67E22] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="text-[11px] font-['Tajawal'] font-medium">الموظفين</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#FFDCC5] dark:bg-orange-900/30 text-[#944A00] dark:text-orange-200 rounded-2xl px-5 py-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-[11px] font-['Tajawal'] font-medium">التقارير</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-2 hover:text-[#E67E22] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[11px] font-['Tajawal'] font-medium">الإعدادات</span>
+</a>
+</nav>
+</body></html>

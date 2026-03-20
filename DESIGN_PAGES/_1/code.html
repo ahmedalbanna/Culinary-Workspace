@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Tajawal:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#f8f9fa",
+              "outline": "#897365",
+              "on-tertiary-fixed": "#001e2e",
+              "inverse-on-surface": "#f0f1f2",
+              "surface-container": "#edeeef",
+              "primary-fixed": "#ffdcc5",
+              "surface-variant": "#e1e3e4",
+              "tertiary-container": "#00a3e4",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#86cfff",
+              "surface-container-high": "#e7e8e9",
+              "tertiary-fixed": "#c7e7ff",
+              "on-primary-container": "#502600",
+              "primary-fixed-dim": "#ffb783",
+              "inverse-surface": "#2e3132",
+              "surface-tint": "#944a00",
+              "on-secondary-container": "#526478",
+              "on-tertiary-container": "#00354d",
+              "on-surface": "#191c1d",
+              "on-secondary-fixed-variant": "#36485b",
+              "on-primary-fixed-variant": "#713700",
+              "error-container": "#ffdad6",
+              "primary-container": "#e67e22",
+              "error": "#ba1a1a",
+              "surface-dim": "#d9dadb",
+              "on-tertiary-fixed-variant": "#004c6d",
+              "on-secondary-fixed": "#091d2e",
+              "surface-container-low": "#f3f4f5",
+              "primary": "#944a00",
+              "on-surface-variant": "#564337",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#e1e3e4",
+              "secondary-fixed-dim": "#b5c8df",
+              "secondary": "#4e6073",
+              "on-tertiary": "#ffffff",
+              "outline-variant": "#dcc1b1",
+              "background": "#f8f9fa",
+              "surface": "#f8f9fa",
+              "tertiary": "#00658f",
+              "on-background": "#191c1d",
+              "secondary-container": "#cfe2f9",
+              "inverse-primary": "#ffb783",
+              "on-primary-fixed": "#301400",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "surface-container-lowest": "#ffffff",
+              "secondary-fixed": "#d1e4fb"
+            },
+            fontFamily: {
+              "headline": ["Tajawal", "Plus Jakarta Sans"],
+              "body": ["Tajawal", "Plus Jakarta Sans"],
+              "label": ["Tajawal", "Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "1rem", "xl": "1.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Tajawal', 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .input-focus-effect:focus-within .focus-line {
+            width: 100%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-[#F8F9FA] dark:bg-slate-900">
+<div class="flex justify-between items-center px-6 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-[#F3F4F5] dark:hover:bg-slate-800 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#944A00] dark:text-[#E67E22]">arrow_forward</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans','Tajawal'] font-bold text-2xl text-[#944A00] dark:text-[#E67E22]">إضافة عميل جديد</h1>
+</div>
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img alt="صورة المدير" class="w-full h-full object-cover" data-alt="User profile avatar of restaurant manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbxLq5AWUibMNXb1bEHMmFtLdYDyynb8XJc1VdsJwTq7ZJIYDs5C7ynTT00ge94eSKDNqtLR_SXGCqXmy-bN8q5juYMX29xdyC-_wii3gmUnQqpBBtudt97CoUsNGVa_ZFrbTOJfGKKHtxEUv5MEgmq6YTCaxKzX9aClccMnU_3-geY2Wa1yc-NEUKHAI7kGWdxLHgev7BfFka87mzIAtklwrDDSUEv1iPX6xPkjOfhlEnPGeOpG8VEYs2XDPvkb3k2wClic0yr54"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 py-8 pb-32">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Form Section (Bento Style) -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Basic Information Card -->
+<section class="bg-surface-container-lowest rounded-xl p-8 shadow-[0_20px_40px_rgba(25,28,29,0.04)]">
+<div class="flex items-center gap-2 mb-8">
+<span class="material-symbols-outlined text-primary">person</span>
+<h2 class="text-xl font-bold text-on-surface">المعلومات الأساسية</h2>
+</div>
+<div class="space-y-8">
+<!-- Full Name Input -->
+<div class="relative group input-focus-effect">
+<label class="block text-sm font-medium text-on-surface-variant mb-2">الاسم الكامل</label>
+<input class="w-full bg-surface-container-highest border-none rounded-t-lg py-4 px-4 focus:ring-0 placeholder:text-outline/50" placeholder="مثال: أحمد محمد علي" type="text"/>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-primary transition-all duration-300 focus-line"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Phone Number -->
+<div class="relative group input-focus-effect">
+<label class="block text-sm font-medium text-on-surface-variant mb-2">رقم الجوال</label>
+<div class="flex items-center bg-surface-container-highest rounded-t-lg">
+<span class="px-4 text-outline/70 border-l border-outline/10">+966</span>
+<input class="w-full bg-transparent border-none py-4 px-4 focus:ring-0 placeholder:text-outline/50" dir="ltr" placeholder="5XXXXXXXX" type="tel"/>
+</div>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-primary transition-all duration-300 focus-line"></div>
+</div>
+<!-- Birthday -->
+<div class="relative group input-focus-effect">
+<label class="block text-sm font-medium text-on-surface-variant mb-2">تاريخ الميلاد</label>
+<input class="w-full bg-surface-container-highest border-none rounded-t-lg py-4 px-4 focus:ring-0 text-on-surface" type="date"/>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-primary transition-all duration-300 focus-line"></div>
+</div>
+</div>
+<!-- Email -->
+<div class="relative group input-focus-effect">
+<label class="block text-sm font-medium text-on-surface-variant mb-2">البريد الإلكتروني (اختياري)</label>
+<input class="w-full bg-surface-container-highest border-none rounded-t-lg py-4 px-4 focus:ring-0 placeholder:text-outline/50" placeholder="example@domain.com" type="email"/>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-primary transition-all duration-300 focus-line"></div>
+</div>
+</div>
+</section>
+<!-- Preferences Card -->
+<section class="bg-surface-container-lowest rounded-xl p-8 shadow-[0_20px_40px_rgba(25,28,29,0.04)]">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">notes</span>
+<h2 class="text-xl font-bold text-on-surface">ملاحظات وتفضيلات خاصة</h2>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">أضف أي تفاصيل مهمة مثل الحساسية الغذائية أو الطاولة المفضلة.</p>
+<textarea class="w-full bg-surface-container-highest border-none rounded-xl py-4 px-4 focus:ring-0 placeholder:text-outline/50 resize-none" placeholder="مثال: يفضل الطاولات المطلة على النافذة، لديه حساسية من المكسرات..." rows="4"></textarea>
+</section>
+</div>
+<!-- Tier Selection Sidebar -->
+<aside class="lg:col-span-4 space-y-6">
+<div class="bg-surface-container-low rounded-xl p-6 sticky top-28">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">military_tech</span>
+<h2 class="text-lg font-bold text-on-surface">فئة العميل</h2>
+</div>
+<div class="space-y-3">
+<!-- VIP Tier -->
+<label class="relative flex items-center p-4 rounded-xl cursor-pointer transition-all hover:bg-surface-container-highest border-2 border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/30 group">
+<input checked="" class="sr-only" name="tier" type="radio" value="vip"/>
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">VIP</span>
+<span class="text-xs text-on-surface-variant">خدمة مميزة وأولوية حجز</span>
+</div>
+<span class="material-symbols-outlined mr-auto text-primary opacity-0 group-has-[:checked]:opacity-100">check_circle</span>
+</label>
+<!-- Member Tier -->
+<label class="relative flex items-center p-4 rounded-xl cursor-pointer transition-all hover:bg-surface-container-highest border-2 border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/30 group">
+<input class="sr-only" name="tier" type="radio" value="member"/>
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">عضو</span>
+<span class="text-xs text-on-surface-variant">عميل مسجل في برنامج الولاء</span>
+</div>
+<span class="material-symbols-outlined mr-auto text-primary opacity-0 group-has-[:checked]:opacity-100">check_circle</span>
+</label>
+<!-- Regular Tier -->
+<label class="relative flex items-center p-4 rounded-xl cursor-pointer transition-all hover:bg-surface-container-highest border-2 border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/30 group">
+<input class="sr-only" name="tier" type="radio" value="regular"/>
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">عادي</span>
+<span class="text-xs text-on-surface-variant">عميل جديد أو غير مسجل</span>
+</div>
+<span class="material-symbols-outlined mr-auto text-primary opacity-0 group-has-[:checked]:opacity-100">check_circle</span>
+</label>
+</div>
+<!-- Action Buttons in Sidebar -->
+<div class="mt-8 space-y-3">
+<button class="w-full py-4 rounded-full bg-gradient-to-r from-primary to-primary-container text-white font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-transform">
+                            حفظ بيانات العميل
+                        </button>
+<button class="w-full py-4 rounded-full bg-transparent text-on-surface-variant font-medium hover:bg-surface-container-highest transition-colors">
+                            إلغاء
+                        </button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-[#191C1D]/15 shadow-[0_-10px_30px_rgba(25,28,29,0.04)] rounded-t-2xl">
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans','Tajawal'] text-xs font-medium">الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#FFDCC5] dark:bg-[#944A00]/30 text-[#944A00] dark:text-[#FFDCC5] rounded-xl px-4 py-1.5 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Plus_Jakarta_Sans','Tajawal'] text-xs font-medium">العملاء</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-['Plus_Jakarta_Sans','Tajawal'] text-xs font-medium">الطلبات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans','Tajawal'] text-xs font-medium">الإعدادات</span>
+</a>
+</nav>
+</body></html>

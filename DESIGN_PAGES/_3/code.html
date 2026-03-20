@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Tajawal:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#f8f9fa",
+              "outline": "#897365",
+              "on-tertiary-fixed": "#001e2e",
+              "inverse-on-surface": "#f0f1f2",
+              "surface-container": "#edeeef",
+              "primary-fixed": "#ffdcc5",
+              "surface-variant": "#e1e3e4",
+              "tertiary-container": "#00a3e4",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#86cfff",
+              "surface-container-high": "#e7e8e9",
+              "tertiary-fixed": "#c7e7ff",
+              "on-primary-container": "#502600",
+              "primary-fixed-dim": "#ffb783",
+              "inverse-surface": "#2e3132",
+              "surface-tint": "#944a00",
+              "on-secondary-container": "#526478",
+              "on-tertiary-container": "#00354d",
+              "on-surface": "#191c1d",
+              "on-secondary-fixed-variant": "#36485b",
+              "on-primary-fixed-variant": "#713700",
+              "error-container": "#ffdad6",
+              "primary-container": "#e67e22",
+              "error": "#ba1a1a",
+              "surface-dim": "#d9dadb",
+              "on-tertiary-fixed-variant": "#004c6d",
+              "on-secondary-fixed": "#091d2e",
+              "surface-container-low": "#f3f4f5",
+              "primary": "#944a00",
+              "on-surface-variant": "#564337",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#e1e3e4",
+              "secondary-fixed-dim": "#b5c8df",
+              "secondary": "#4e6073",
+              "on-tertiary": "#ffffff",
+              "outline-variant": "#dcc1b1",
+              "background": "#f8f9fa",
+              "surface": "#f8f9fa",
+              "tertiary": "#00658f",
+              "on-background": "#191c1d",
+              "secondary-container": "#cfe2f9",
+              "inverse-primary": "#ffb783",
+              "on-primary-fixed": "#301400",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "surface-container-lowest": "#ffffff",
+              "secondary-fixed": "#d1e4fb"
+            },
+            fontFamily: {
+              "headline": ["Tajawal", "Plus Jakarta Sans"],
+              "body": ["Tajawal", "Plus Jakarta Sans"],
+              "label": ["Tajawal", "Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "1rem", "xl": "1.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Tajawal', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-40 bg-[#F8F9FA] dark:bg-slate-900 border-none shadow-none">
+<div class="flex justify-between items-center px-6 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#944A00] dark:text-[#E67E22] hover:bg-[#F3F4F5] dark:hover:bg-slate-800 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans','Tajawal'] font-bold text-2xl text-[#944A00] dark:text-[#E67E22]">إدارة العملاء</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="hidden md:flex items-center gap-6 ml-8">
+<span class="text-slate-500 dark:text-slate-400 font-medium cursor-pointer hover:text-primary transition-colors">الرئيسية</span>
+<span class="text-slate-500 dark:text-slate-400 font-medium cursor-pointer hover:text-primary transition-colors">العملاء</span>
+<span class="text-[#944A00] dark:text-[#E67E22] font-bold cursor-pointer">الطلبات</span>
+<span class="text-slate-500 dark:text-slate-400 font-medium cursor-pointer hover:text-primary transition-colors">الإعدادات</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden">
+<img alt="صورة المدير" class="w-full h-full object-cover" data-alt="Professional man in a suit for profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA_5VfDck1GLvhhqUSgn0niXT9zh3zHx-6Mg8oxcw1aSotZE8VoSsVtasm1aDqiR2fScG41zFLXH-F0hP04eiwfTy98zucbGfMgwcL0V4TtLq-07Fk6Vpnb5d3kPSb57l5tiKmyJhVH-RKS5srX74GH7l12CCgQfE8xChEN3CuD0DbyMyPu-YuGL0v6NV2fT_H-peVCOxDHNGDxPQ3ffgrnY8plwJolcI7TTmI8yfl65teHaFK78xygTPgAMDYzeQvXxabDxKM5tY"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 md:px-6 pt-8">
+<!-- Search & Filter Section -->
+<div class="mb-10">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div>
+<h2 class="text-3xl font-extrabold text-on-surface mb-2">سجل الطلبات الأخير</h2>
+<p class="text-on-surface-variant">تتبع جميع الطلبات المكتملة وتفاصيلها الفنية.</p>
+</div>
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pr-12 pl-4 py-3.5 bg-surface-container-lowest border-none rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-outline/60" placeholder="البحث برقم الطلب..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Orders Bento-ish List Layout -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Order Item 1 -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 md:p-6 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_20px_40px_rgba(25,28,29,0.06)] cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-center gap-6">
+<div class="flex-shrink-0 w-14 h-14 bg-primary-fixed rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">receipt_long</span>
+</div>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">رقم الطلب</span>
+<span class="text-lg font-bold text-on-surface">#ORD-88219</span>
+</div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">التاريخ</span>
+<span class="text-on-surface-variant font-medium">14 أكتوبر، 2023 - 08:30 م</span>
+</div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">الأصناف</span>
+<p class="text-on-surface-variant truncate max-w-[200px]">2 بيتزا مارغريتا، 1 كولا، 1 بطاطس عائلية</p>
+</div>
+<div class="flex flex-row md:flex-col justify-between md:items-end gap-2">
+<span class="inline-flex items-center px-3 py-1 bg-secondary-container text-on-secondary-fixed-variant text-xs font-bold rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 ml-2"></span>
+                                مكتمل
+                            </span>
+<span class="text-xl font-black text-primary">245.00 ر.س</span>
+</div>
+</div>
+<div class="hidden md:flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</div>
+</div>
+</div>
+<!-- Order Item 2 -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 md:p-6 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_20px_40px_rgba(25,28,29,0.06)] cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-center gap-6">
+<div class="flex-shrink-0 w-14 h-14 bg-secondary-fixed rounded-xl flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-3xl">restaurant</span>
+</div>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">رقم الطلب</span>
+<span class="text-lg font-bold text-on-surface">#ORD-88215</span>
+</div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">التاريخ</span>
+<span class="text-on-surface-variant font-medium">14 أكتوبر، 2023 - 07:15 م</span>
+</div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">الأصناف</span>
+<p class="text-on-surface-variant truncate max-w-[200px]">3 وجبة برجر دبل، 2 عصير برتقال</p>
+</div>
+<div class="flex flex-row md:flex-col justify-between md:items-end gap-2">
+<span class="inline-flex items-center px-3 py-1 bg-secondary-container text-on-secondary-fixed-variant text-xs font-bold rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 ml-2"></span>
+                                مكتمل
+                            </span>
+<span class="text-xl font-black text-primary">188.50 ر.س</span>
+</div>
+</div>
+<div class="hidden md:flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</div>
+</div>
+</div>
+<!-- Order Item 3 -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 md:p-6 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_20px_40px_rgba(25,28,29,0.06)] cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-center gap-6">
+<div class="flex-shrink-0 w-14 h-14 bg-primary-fixed rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">coffee</span>
+</div>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">رقم الطلب</span>
+<span class="text-lg font-bold text-on-surface">#ORD-88201</span>
+</div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">التاريخ</span>
+<span class="text-on-surface-variant font-medium">14 أكتوبر، 2023 - 04:45 م</span>
+</div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">الأصناف</span>
+<p class="text-on-surface-variant truncate max-w-[200px]">1 فلات وايت، 1 تشيزكيك الفراولة</p>
+</div>
+<div class="flex flex-row md:flex-col justify-between md:items-end gap-2">
+<span class="inline-flex items-center px-3 py-1 bg-secondary-container text-on-secondary-fixed-variant text-xs font-bold rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 ml-2"></span>
+                                مكتمل
+                            </span>
+<span class="text-xl font-black text-primary">42.00 ر.س</span>
+</div>
+</div>
+<div class="hidden md:flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</div>
+</div>
+</div>
+<!-- Order Item 4 -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 md:p-6 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_20px_40px_rgba(25,28,29,0.06)] cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-center gap-6">
+<div class="flex-shrink-0 w-14 h-14 bg-secondary-fixed rounded-xl flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-3xl">fastfood</span>
+</div>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">رقم الطلب</span>
+<span class="text-lg font-bold text-on-surface">#ORD-88198</span>
+</div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">التاريخ</span>
+<span class="text-on-surface-variant font-medium">13 أكتوبر، 2023 - 11:20 م</span>
+</div>
+<div class="space-y-1">
+<span class="text-xs font-bold text-outline uppercase tracking-wider block">الأصناف</span>
+<p class="text-on-surface-variant truncate max-w-[200px]">4 وجبة أطفال، 1 سلطة يونانية، 2 ماء</p>
+</div>
+<div class="flex flex-row md:flex-col justify-between md:items-end gap-2">
+<span class="inline-flex items-center px-3 py-1 bg-secondary-container text-on-secondary-fixed-variant text-xs font-bold rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 ml-2"></span>
+                                مكتمل
+                            </span>
+<span class="text-xl font-black text-primary">312.00 ر.س</span>
+</div>
+</div>
+<div class="hidden md:flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination or Load More -->
+<div class="mt-12 flex justify-center">
+<button class="px-10 py-3 bg-primary text-white font-bold rounded-full shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+                تحميل المزيد من الطلبات
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-[#191C1D]/15 shadow-[0_-10px_30px_rgba(25,28,29,0.04)] md:hidden">
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans','Tajawal'] text-xs font-medium">الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Plus_Jakarta_Sans','Tajawal'] text-xs font-medium">العملاء</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#FFDCC5] dark:bg-[#944A00]/30 text-[#944A00] dark:text-[#FFDCC5] rounded-xl px-4 py-1.5 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+<span class="font-['Plus_Jakarta_Sans','Tajawal'] text-xs font-medium">الطلبات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans','Tajawal'] text-xs font-medium">الإعدادات</span>
+</a>
+</nav>
+<!-- Decorative Elements (The Culinary Glow) -->
+<div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-fixed/20 blur-[120px] rounded-full -z-10"></div>
+<div class="fixed bottom-[-5%] right-[-5%] w-[30%] h-[30%] bg-secondary-fixed/10 blur-[100px] rounded-full -z-10"></div>
+</body></html>

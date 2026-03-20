@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Tajawal:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Tajawal', 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #944a00 0%, #e67e22 100%);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#dcc1b1",
+              "tertiary-fixed": "#c7e7ff",
+              "inverse-on-surface": "#f0f1f2",
+              "surface-container-high": "#e7e8e9",
+              "secondary": "#4e6073",
+              "error-container": "#ffdad6",
+              "surface-dim": "#d9dadb",
+              "on-secondary-container": "#526478",
+              "surface-variant": "#e1e3e4",
+              "surface-container-lowest": "#ffffff",
+              "on-surface": "#191c1d",
+              "surface-container-low": "#f3f4f5",
+              "on-primary-container": "#502600",
+              "on-tertiary-fixed": "#001e2e",
+              "inverse-surface": "#2e3132",
+              "on-secondary": "#ffffff",
+              "primary-fixed-dim": "#ffb783",
+              "on-background": "#191c1d",
+              "background": "#f8f9fa",
+              "secondary-fixed-dim": "#b5c8df",
+              "primary": "#944a00",
+              "on-secondary-fixed-variant": "#36485b",
+              "error": "#ba1a1a",
+              "primary-container": "#e67e22",
+              "surface-container": "#edeeef",
+              "outline": "#897365",
+              "on-secondary-fixed": "#091d2e",
+              "tertiary-fixed-dim": "#86cfff",
+              "on-tertiary-container": "#00354d",
+              "on-tertiary": "#ffffff",
+              "on-primary": "#ffffff",
+              "surface-tint": "#944a00",
+              "surface": "#f8f9fa",
+              "surface-container-highest": "#e1e3e4",
+              "surface-bright": "#f8f9fa",
+              "on-primary-fixed": "#301400",
+              "inverse-primary": "#ffb783",
+              "on-error": "#ffffff",
+              "on-primary-fixed-variant": "#713700",
+              "on-tertiary-fixed-variant": "#004c6d",
+              "tertiary-container": "#00a3e4",
+              "on-surface-variant": "#564337",
+              "on-error-container": "#93000a",
+              "secondary-container": "#cfe2f9",
+              "tertiary": "#00658f",
+              "primary-fixed": "#ffdcc5",
+              "secondary-fixed": "#d1e4fb"
+            },
+            fontFamily: {
+              "headline": ["Tajawal", "Plus Jakarta Sans"],
+              "body": ["Tajawal", "Plus Jakarta Sans"],
+              "label": ["Tajawal", "Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "1rem", "xl": "1.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-orange-700 text-2xl" data-icon="restaurant_menu">restaurant_menu</span>
+<h1 class="text-xl font-extrabold text-orange-800 tracking-tight font-headline">إدارة القائمة</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-200/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-500" data-icon="search">search</span>
+</button>
+<div class="hidden md:flex items-center gap-6 mr-8">
+<span class="text-orange-700 font-bold border-b-2 border-orange-700 pb-1">القائمة</span>
+<span class="text-slate-500 hover:text-orange-700 cursor-pointer transition-colors">الطلبات</span>
+<span class="text-slate-500 hover:text-orange-700 cursor-pointer transition-colors">الطاولات</span>
+</div>
+</div>
+</header>
+<main class="pt-20 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- Search & Filter Section -->
+<section class="mt-6 mb-8">
+<div class="relative max-w-2xl mx-auto">
+<input class="w-full h-14 bg-surface-container-highest border-none rounded-xl pr-12 pl-4 focus:ring-2 focus:ring-primary text-on-surface placeholder-on-surface-variant/60" placeholder="البحث عن طبق أو مشروب..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+</div>
+</section>
+<!-- Categories Tabs -->
+<nav class="flex overflow-x-auto gap-3 pb-4 mb-8 no-scrollbar scroll-smooth">
+<button class="flex-shrink-0 px-6 py-2.5 rounded-full bg-primary text-white font-bold shadow-md shadow-primary/20">الأطباق الرئيسية</button>
+<button class="flex-shrink-0 px-6 py-2.5 rounded-full bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors">المقبلات</button>
+<button class="flex-shrink-0 px-6 py-2.5 rounded-full bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors">الحلويات</button>
+<button class="flex-shrink-0 px-6 py-2.5 rounded-full bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors">المشروبات</button>
+<button class="flex-shrink-0 px-6 py-2.5 rounded-full bg-surface-container-low text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors">السلطات</button>
+</nav>
+<!-- Bento-Style Grid of Dishes -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Dish Card 1 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High-end Wagyu Steak with herbs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAiWN7cB1F_WXoAIOv1doh7XhzswP0Qpg7cU2sPDjsdeqnIhmMDOIZECOi-imnfuDvMmvH1wr_AmfoMcBGrgiu9bVIwdoQrojEVWqoSGre0y5r1kv3k17dSai4dw6AMqE3CoS7mYm5odtXP8rQCm7x_-jYkS4dBnGVPU2qKP2ji-dqcW8tC8DOgkb6HEta4ZvSLmovHEjVm_pHcOwOZl665lHUgzZM7j_WriGIbJr2qE3qXKlFvJsI56yjAenet0-QZ5CMQAO8QD4"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary/90 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">متوفر</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-on-surface">ستيك واغيو فاخر</h3>
+<span class="text-primary font-extrabold">320 ر.س</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">شريحة لحم واغيو طرية مشوية على اللهب مع صلصة الفلفل الأسود والأعشاب البرية.</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-primary-fixed hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-error-container hover:text-error transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex items-center gap-1 text-xs text-on-secondary-fixed-variant bg-secondary-fixed px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span>
+<span>25-30 دقيقة</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Dish Card 2 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Fresh Quinoa Salad with vegetables" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6ZW_nN6tRES2ipJgBJstYodeAcS_luWni-2RXHsBpjjO5a0qbI4hSjhQA4e8vggSonkiH11N8gagtjDf2IW0jvipbu6de3-BtoW5DaXQm8G06ELDoodDI29sf6S9da_9fSH4jH0FsH0CSyMXvtEKIj0F1fCo01TH3B28fyDZOYQAUhzii5yGVyBFV2pSsKsNTsJvA-c3ItNUymBVI_Ya-EvosARE2bJp_ofYZ6DwRzcZOI6isCH5bJVSBkJPl9LxtlEKjkhPeL58"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-secondary text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">VIP</span>
+<span class="bg-primary/90 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">متوفر</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-on-surface">سلطة الكينوا الملكية</h3>
+<span class="text-primary font-extrabold">65 ر.س</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">مزيج من الكينوا العضوية مع الأفوكادو الطازج، الرمان، وجبن الماعز مع صلصة الليمون.</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-primary-fixed hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-error-container hover:text-error transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex items-center gap-1 text-xs text-on-secondary-fixed-variant bg-secondary-fixed px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span>
+<span>15 دقيقة</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Dish Card 3 (Out of Stock State) -->
+<article class="bg-surface-container-lowest/60 rounded-xl overflow-hidden shadow-sm transition-shadow group relative opacity-80">
+<div class="relative h-48 w-full overflow-hidden grayscale-[0.5]">
+<img class="w-full h-full object-cover" data-alt="Chocolate Lava Cake dessert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4pCauhIuBGVIkdGcWJCafVmrRQZaIMitpRAIlbChcfid6X7FTnzeZvn3sM301LZAzkDqXrRXYN9Yr40d2jpfjq5FXVBC37IPyzvM9Hd17CpXzIQx3BbbvRWQK4x-qAJU8-jBx-RlX85UQzgrcOQjFe7ObXwn2dNREQH5ox3Rs_ZIIvotS5nlGCmNn-WcBYh_52SFsDkp_-7dgNEn_Pgdk23EbbGLKYVxMNZH9xo58IdWIDll3MJw15pSxy4q0Zq67ye2Aehvp_8I"/>
+<div class="absolute inset-0 bg-on-surface/20 flex items-center justify-center">
+<span class="bg-error text-white font-bold px-6 py-2 rounded-lg shadow-lg">نفذت الكمية</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-on-surface">لافا كيك الشوكولاتة</h3>
+<span class="text-on-surface-variant/50 line-through font-extrabold">45 ر.س</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">كيك الشوكولاتة البلجيكية الساخنة مع قلب ذائب وكرة من آيس كريم الفانيليا.</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-primary-fixed hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-error-container hover:text-error transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex items-center gap-1 text-xs text-on-surface-variant bg-surface-container-high px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-sm" data-icon="block">block</span>
+<span>غير متاح حالياً</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Dish Card 4 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Spicy Asian Noodles with shrimp" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk_dZREK8wFqYdLm8LUqLBbtvx64w--nPahsZwuRqNFJQ5lpyMNgXcTmc1Q5K5UBzFxLWd_wDYYcUZK2tP7fEQylTMm-1c4fVWJLjLqEqFeDZMnmDWunpVZ3PJhBFWg5CC6gehyA-Ujb9D51EcIZmW8aIt1LtW6HHPblY5Uvrj9HBY7AJ1tKJAL5fRbVWtXnIkKOz9xm6cgYqqo5FkWwanSLvpn5Tg84lH0ZpnPC-0C5677B4ZEomHWV2q9qW7VdP9Oe41LSzir3I"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary/90 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">متوفر</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-on-surface">نودلز حارة بالروبيان</h3>
+<span class="text-primary font-extrabold">85 ر.س</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">نودلز محضرة يدوياً مع الروبيان الكبير، الفلفل الحار، وصلصة الصويا والزنجبيل.</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-primary-fixed hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-error-container hover:text-error transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex items-center gap-1 text-xs text-on-secondary-fixed-variant bg-secondary-fixed px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span>
+<span>20 دقيقة</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Dish Card 5 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Traditional Hummus plate with oil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtwtSPbZWsl7J38KmNRmGRihXo080jpc-hKD6HW5FfEDrgh6cAFqrO2zdmLQ25QqtkhZLxq1JeIvFOnX5N0Q749goLulb-GgY9b0WIsbBbaN0oltSZnzoIVs52cMR-skL1iKXp4SUHGWLxOLVhmHWzIIRDYEXppbwXKC7v5M5DswFiBl8gL7V5m5KTuJM5yZv5iK9pamVrjXdW9hRc5kyeeYmvuvnkeQHYP0MXokMISJuP_qt_idCEViLFez5cbq_DBnvH_meQuCA"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary/90 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">متوفر</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-on-surface">حمص بالصنوبر</h3>
+<span class="text-primary font-extrabold">35 ر.س</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">حمص كريمي تقليدي مع زيت الزيتون البكر والصنوبر المحمص والكمون البلدي.</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-primary-fixed hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant hover:bg-error-container hover:text-error transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex items-center gap-1 text-xs text-on-secondary-fixed-variant bg-secondary-fixed px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span>
+<span>10 دقائق</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Dish Card 6 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group relative border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center p-8 min-h-[400px]">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="add_circle">add_circle</span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mb-2">إضافة طبق جديد</h3>
+<p class="text-on-surface-variant text-sm text-center mb-6">قم بإضافة المزيد من الخيارات الشهية لقائمة مطعمك.</p>
+<button class="px-8 py-3 primary-gradient text-white rounded-full font-bold shadow-lg shadow-primary/30 active:scale-95 transition-transform">بدء الإضافة</button>
+</article>
+</div>
+</main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-24 left-6 w-16 h-16 rounded-full primary-gradient text-white shadow-2xl flex items-center justify-center active:scale-90 transition-transform z-50 md:bottom-10">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-white/90 backdrop-blur-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-2xl z-50 h-20">
+<a class="flex flex-col items-center justify-center text-slate-400 px-3 py-1.5 hover:text-orange-600 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium mt-1">Floor</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-3 py-1.5 hover:text-orange-600 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium mt-1">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-orange-50 text-orange-700 rounded-xl px-4 py-1.5" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-bold mt-1">Menu</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-3 py-1.5 hover:text-orange-600 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium mt-1">Staff</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-3 py-1.5 hover:text-orange-600 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

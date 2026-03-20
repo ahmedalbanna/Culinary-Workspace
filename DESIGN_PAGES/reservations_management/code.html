@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>إدارة الحجوزات - The Digital Maître D’</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-container": "#e67e22",
+              "on-primary-container": "#502600",
+              "on-primary": "#ffffff",
+              "primary-fixed-dim": "#ffb783",
+              "on-primary-fixed-variant": "#713700",
+              "on-background": "#191c1d",
+              "tertiary-fixed-dim": "#86cfff",
+              "on-surface": "#191c1d",
+              "tertiary-container": "#00a3e4",
+              "on-tertiary-fixed": "#001e2e",
+              "tertiary": "#00658f",
+              "on-tertiary": "#ffffff",
+              "primary-fixed": "#ffdcc5",
+              "on-surface-variant": "#564337",
+              "on-error": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-error-container": "#93000a",
+              "on-tertiary-container": "#00354d",
+              "error-container": "#ffdad6",
+              "background": "#f8f9fa",
+              "surface-tint": "#944a00",
+              "tertiary-fixed": "#c7e7ff",
+              "on-primary-fixed": "#301400",
+              "inverse-primary": "#ffb783",
+              "on-secondary-fixed": "#091d2e",
+              "on-secondary-container": "#526478",
+              "surface-variant": "#e1e3e4",
+              "inverse-surface": "#2e3132",
+              "surface-container-high": "#e7e8e9",
+              "outline": "#897365",
+              "on-tertiary-fixed-variant": "#004c6d",
+              "secondary-fixed-dim": "#b5c8df",
+              "surface-dim": "#d9dadb",
+              "secondary-container": "#cfe2f9",
+              "error": "#ba1a1a",
+              "surface-container-highest": "#e1e3e4",
+              "primary": "#944a00",
+              "outline-variant": "#dcc1b1",
+              "secondary-fixed": "#d1e4fb",
+              "surface-container": "#edeeef",
+              "surface-bright": "#f8f9fa",
+              "on-secondary-fixed-variant": "#36485b",
+              "inverse-on-surface": "#f0f1f2",
+              "surface": "#f8f9fa",
+              "surface-container-low": "#f3f4f5",
+              "secondary": "#4e6073"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .active-fill { font-variation-settings: 'FILL' 1; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm flex items-center justify-between px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img alt="Profile" data-alt="Restaurant Manager Profile Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiHpKiBpDvmLGvaFe0Z7mH1rAx6AthIFv_QiZgW9HQvVi8bXKeQU-OMUtZrHZiM6x51xsmjyxK1VCZloBuim2uky42zSkAKEXxFt6kIiMGO3HggjG4mMOc3hkW9bqWX7epEqGdJkwiF41tHY49wmj3g_m6YcXKRqU_aA27w_GV_eR3gpxqWPDX4h2JTpZJ8W8wHxl--9jUdZ-6f5U3rUSrLHRVlSdDqL5kKINanjIBNlKpCc4arM7ORctCNbWalnaa9r2EBP7GoOI"/>
+</div>
+<h1 class="text-xl font-extrabold text-orange-800 tracking-tight font-headline">The Digital Maître D’</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-orange-50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-500" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Side Navigation Drawer (Desktop) -->
+<aside class="hidden md:flex fixed right-0 top-0 h-screen w-72 flex-col p-4 bg-slate-50 dark:bg-slate-950 shadow-[0_20px_40px_rgba(25,28,29,0.06)] z-40">
+<div class="mt-20 mb-8 px-4">
+<h2 class="text-2xl font-black text-orange-700">Saffron &amp; Slate</h2>
+<p class="text-slate-500 text-sm">إدارة الخدمة المسائية</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="text-slate-600 px-4 py-3 hover:bg-slate-200/50 transition-all rounded-xl flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-medium">لوحة التحكم</span>
+</a>
+<a class="text-slate-600 px-4 py-3 hover:bg-slate-200/50 transition-all rounded-xl flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-medium">العملاء</span>
+</a>
+<a class="bg-orange-100 text-orange-800 rounded-xl font-bold px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined active-fill" data-icon="calendar_today" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-medium">Reservations</span>
+</a>
+<a class="text-slate-600 px-4 py-3 hover:bg-slate-200/50 transition-all rounded-xl flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-medium">التسويق</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 md:pr-72 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- Header & Action Row -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+<div>
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight mb-2">إدارة الحجوزات</h2>
+<div class="flex items-center gap-2 text-on-surface-variant bg-surface-container-low px-4 py-2 rounded-full w-fit">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span>
+<span class="text-sm font-semibold">اليوم، ٢٤ مايو ٢٠٢٤</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-3 rounded-full font-bold flex items-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    حجز جديد
+                </button>
+</div>
+</div>
+<!-- Dashboard Layout: Bento Style -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Sidebar: Date Picker & Stats (LHS in RTL) -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Date Selection Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-lg">اختر التاريخ</h3>
+<div class="flex gap-1">
+<button class="p-1 hover:bg-surface-container rounded"><span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span></button>
+<button class="p-1 hover:bg-surface-container rounded"><span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span></button>
+</div>
+</div>
+<!-- Mock Calendar -->
+<div class="grid grid-cols-7 gap-1 text-center text-sm">
+<span class="text-slate-400 font-medium py-2">ح</span>
+<span class="text-slate-400 font-medium py-2">ن</span>
+<span class="text-slate-400 font-medium py-2">ث</span>
+<span class="text-slate-400 font-medium py-2">ر</span>
+<span class="text-slate-400 font-medium py-2">خ</span>
+<span class="text-slate-400 font-medium py-2">ج</span>
+<span class="text-slate-400 font-medium py-2">س</span>
+<div class="py-3 text-slate-300">٢٠</div>
+<div class="py-3 text-slate-300">٢١</div>
+<div class="py-3 text-slate-300">٢٢</div>
+<div class="py-3 text-slate-300">٢٣</div>
+<div class="py-3 bg-primary text-white rounded-lg font-bold">٢٤</div>
+<div class="py-3 hover:bg-orange-50 rounded-lg cursor-pointer">٢٥</div>
+<div class="py-3 hover:bg-orange-50 rounded-lg cursor-pointer">٢٦</div>
+</div>
+</div>
+<!-- Fast Stats Card -->
+<div class="bg-primary-fixed p-6 rounded-xl space-y-4">
+<h3 class="text-on-primary-fixed font-bold">إحصائيات اليوم</h3>
+<div class="flex justify-between items-end">
+<div>
+<p class="text-4xl font-black text-on-primary-fixed tracking-tight">٤٢</p>
+<p class="text-on-primary-fixed-variant text-sm">إجمالي الضيوف</p>
+</div>
+<div class="w-12 h-12 bg-white/30 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content: Reservations List (RHS in RTL) -->
+<div class="lg:col-span-8">
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<!-- Filters Header -->
+<div class="p-4 border-b border-outline-variant/15 flex items-center justify-between bg-surface-container-low/30">
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-full bg-primary text-on-primary text-sm font-bold">الكل</button>
+<button class="px-4 py-2 rounded-full bg-white text-slate-600 text-sm font-medium hover:bg-orange-50 transition-colors">المؤكدة</button>
+<button class="px-4 py-2 rounded-full bg-white text-slate-600 text-sm font-medium hover:bg-orange-50 transition-colors">قيد الانتظار</button>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+</div>
+<!-- List Area -->
+<div class="divide-y divide-outline-variant/10">
+<!-- Item 1 -->
+<div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-container-low/20 transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 bg-orange-50 rounded-xl flex flex-col items-center justify-center border border-orange-100 group-hover:border-primary/30 transition-colors">
+<span class="text-orange-700 font-bold text-lg">١٩:٣٠</span>
+<span class="text-[10px] text-orange-600 font-bold uppercase tracking-wider">م</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface text-lg">أحمد منصور</h4>
+<div class="flex items-center gap-3 mt-1">
+<span class="flex items-center gap-1 text-sm text-slate-500">
+<span class="material-symbols-outlined text-sm" data-icon="person">person</span> ٤ أشخاص
+                                        </span>
+<span class="flex items-center gap-1 text-sm text-slate-500">
+<span class="material-symbols-outlined text-sm" data-icon="table_restaurant">table_restaurant</span> طاولة ١٢
+                                        </span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between sm:justify-end gap-4">
+<span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">تم التأكيد</span>
+<button class="p-2 hover:bg-slate-100 rounded-full text-slate-400">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-container-low/20 transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 bg-slate-50 rounded-xl flex flex-col items-center justify-center border border-slate-100">
+<span class="text-slate-700 font-bold text-lg">٢٠:١٥</span>
+<span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">م</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface text-lg">سارة العتيبي</h4>
+<div class="flex items-center gap-3 mt-1">
+<span class="flex items-center gap-1 text-sm text-slate-500">
+<span class="material-symbols-outlined text-sm" data-icon="person">person</span> شخصين
+                                        </span>
+<span class="flex items-center gap-1 text-sm text-slate-500">
+<span class="material-symbols-outlined text-sm" data-icon="table_restaurant">table_restaurant</span> طاولة ٥
+                                        </span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between sm:justify-end gap-4">
+<span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">جالس</span>
+<button class="p-2 hover:bg-slate-100 rounded-full text-slate-400">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-container-low/20 transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 bg-slate-50 rounded-xl flex flex-col items-center justify-center border border-slate-100">
+<span class="text-slate-700 font-bold text-lg">٢١:٠٠</span>
+<span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">م</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface text-lg">عائلة خالد</h4>
+<div class="flex items-center gap-3 mt-1">
+<span class="flex items-center gap-1 text-sm text-slate-500">
+<span class="material-symbols-outlined text-sm" data-icon="person">person</span> ٦ أشخاص
+                                        </span>
+<span class="flex items-center gap-1 text-sm text-slate-500">
+<span class="material-symbols-outlined text-sm" data-icon="table_restaurant">table_restaurant</span> طاولة ٢٤
+                                        </span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between sm:justify-end gap-4">
+<span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded-full">قيد الانتظار</span>
+<button class="p-2 hover:bg-slate-100 rounded-full text-slate-400">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<button class="w-full py-4 text-primary font-bold hover:bg-orange-50 transition-colors text-sm">عرض المزيد من الحجوزات</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md rounded-t-3xl border-t border-slate-100 flex justify-around items-center px-4 pb-6 pt-3 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+<a class="flex flex-col items-center text-slate-400 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[11px] font-semibold mt-1">الضيوف</span>
+</a>
+<a class="flex flex-col items-center text-orange-700 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined active-fill" data-icon="event" style="font-variation-settings: 'FILL' 1;">event</span>
+<span class="text-[11px] font-semibold mt-1">Bookings</span>
+</a>
+<a class="flex flex-col items-center text-slate-400 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="local_offer">local_offer</span>
+<span class="text-[11px] font-semibold mt-1">العروض</span>
+</a>
+<a class="flex flex-col items-center text-slate-400 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-[11px] font-semibold mt-1">Stats</span>
+</a>
+</nav>
+<!-- Contextual FAB (Only on main screens) -->
+<div class="fixed bottom-24 left-6 md:hidden z-50">
+<button class="w-14 h-14 rounded-full bg-primary text-on-primary shadow-xl flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+</div>
+</body></html>

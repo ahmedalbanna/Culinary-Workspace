@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Maître D’ - Restaurant Management System</title>
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E67E22",
+                        "primary-container": "#E67E22",
+                        "on-primary": "#ffffff",
+                        "surface": "#f8f9fa",
+                        "on-surface": "#191c1d",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#564337",
+                        "outline": "#897365",
+                        "tertiary": "#00658f",
+                        "secondary": "#4e6073",
+                        "primary-fixed": "#ffdcc5",
+                        "secondary-container": "#cfe2f9",
+                        "on-primary-fixed": "#301400",
+                        "on-secondary-container": "#526478",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                    },
+                    fontFamily: {
+                        "headline": ["Tajawal", "Plus Jakarta Sans"],
+                        "body": ["Tajawal", "Plus Jakarta Sans"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "1rem", "xl": "1.25rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Tajawal', 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .hero-gradient { background: linear-gradient(135deg, #944a00 0%, #e67e22 100%); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        // --- Shared Components ---
+
+        const TopAppBar = ({ title = "Maître D’", showBack = false, onBack }) => {
+            const navigate = useNavigate();
+            return (
+                <header className="fixed top-0 w-full z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-sm">
+                    <div className="flex justify-between items-center px-6 py-4 w-full">
+                        <div className="flex items-center gap-4">
+                            {showBack && (
+                                <button onClick={() => navigate(-1)} className="p-2 rounded-full hover:bg-zinc-100 transition-colors">
+                                    <span className="material-symbols-outlined">arrow_forward</span>
+                                </button>
+                            )}
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full bg-secondary-container overflow-hidden">
+                                    <img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYEiLeg-kLCToST-zwm0av-Q7jdr6J-uoHK0SFP0qEVT3IowBFFfn7cOu4yfhyMF7J_-1Ost3dplIM13GhAjcS_od9Yocye9km-J2vTck7lVAeRv8LMrQyMIajYReOrmEkhunl6dBiz9dbC1ULr3DMZ0nsh575emt2suv6UDS_52kPvNNUMfL7DAJO4N56lTyRUdipS-OGRD1qVk4O6Erk1VLXcGFNUXn73MHVaG4zqvenEFb14atKWrAFDxrRjqqhWNgRPSojNc8" />
+                                </div>
+                                <h1 className="text-xl font-bold tracking-tight text-primary font-headline">{title}</h1>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button className="p-2 rounded-full hover:bg-orange-50 text-zinc-500">
+                                <span className="material-symbols-outlined">notifications</span>
+                            </button>
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        const BottomNavBar = () => {
+            const location = useLocation();
+            const items = [
+                { icon: 'dashboard', label: 'الرئيسية', path: '/' },
+                { icon: 'group', label: 'العملاء', path: '/customers' },
+                { icon: 'event_available', label: 'الحجوزات', path: '/reservations' },
+                { icon: 'campaign', label: 'التسويق', path: '/marketing' }
+            ];
+
+            return (
+                <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xl shadow-[0_-10px_30px_rgba(0,0,0,0.04)] z-50 rounded-t-3xl border-t border-zinc-100">
+                    {items.map((item) => {
+                        const isActive = location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path));
+                        return (
+                            <Link key={item.path} to={item.path} className={`flex flex-col items-center justify-center px-5 py-2 transition-transform duration-150 active:scale-90 ${isActive ? 'bg-orange-100 text-primary rounded-2xl' : 'text-zinc-500'}`}>
+                                <span className={`material-symbols-outlined ${isActive ? 'fill-icon' : ''}`} style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}>{item.icon}</span>
+                                <span className="text-[11px] font-medium tracking-wide mt-1">{item.label}</span>
+                            </Link>
+                        );
+                    })}
+                </nav>
+            );
+        };
+
+        // --- Screens ---
+
+        const Dashboard = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar />
+                    <main className="pt-24 px-6 max-w-7xl mx-auto">
+                        <section className="mb-10">
+                            <h2 className="text-3xl font-extrabold text-on-surface tracking-tight mb-2">أهلاً بك، مدير المطعم</h2>
+                            <p className="text-on-surface-variant text-lg">نظرة عامة على أداء اليوم، الجمعة ٢٤ مايو</p>
+                        </section>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                            <div className="bg-white p-6 rounded-xl border-b-4 border-primary shadow-sm">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="p-3 bg-primary-fixed rounded-lg text-on-primary-fixed-variant"><span className="material-symbols-outlined text-3xl">payments</span></div>
+                                    <span className="text-xs font-bold bg-secondary-container text-on-secondary-container px-2 py-1 rounded-full">+١٢٪</span>
+                                </div>
+                                <p className="text-on-surface-variant text-sm font-medium mb-1">إجمالي إيرادات اليوم</p>
+                                <h3 className="text-4xl font-extrabold tracking-tight text-primary">١٢,٤٥٠ ر.س</h3>
+                            </div>
+                            <div onClick={() => navigate('/reservations')} className="bg-white p-6 rounded-xl border-b-4 border-tertiary shadow-sm cursor-pointer">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="p-3 bg-tertiary-fixed rounded-lg text-on-tertiary-fixed-variant"><span className="material-symbols-outlined text-3xl">event_seat</span></div>
+                                    <span className="text-xs font-bold text-on-surface-variant">١٨ متبقي</span>
+                                </div>
+                                <p className="text-on-surface-variant text-sm font-medium mb-1">الحجوزات النشطة</p>
+                                <h3 className="text-4xl font-extrabold tracking-tight text-tertiary">٤٢ حجزاً</h3>
+                            </div>
+                            <div onClick={() => navigate('/staff')} className="bg-white p-6 rounded-xl border-b-4 border-secondary shadow-sm cursor-pointer">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="p-3 bg-secondary-fixed rounded-lg text-on-secondary-fixed-variant"><span className="material-symbols-outlined text-3xl">badge</span></div>
+                                    <span className="text-xs font-bold text-primary font-bold">نشط حالياً</span>
+                                </div>
+                                <p className="text-on-surface-variant text-sm font-medium mb-1">الطاقم المناوب</p>
+                                <h3 className="text-4xl font-extrabold tracking-tight text-secondary">١٥ موظفاً</h3>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                            <div className="lg:col-span-8 space-y-6">
+                                <div className="flex justify-between items-center">
+                                    <h3 className="text-xl font-bold text-on-surface">أحدث الطلبات</h3>
+                                    <Link to="/orders" className="text-primary text-sm font-bold hover:underline">عرض الكل</Link>
+                                </div>
+                                <div className="bg-white rounded-xl overflow-hidden shadow-sm">
+                                    {[
+                                        { id: '12', type: 'طاولة', val: '٤٥٠ ر.س', status: 'قيد التحضير', icon: 'restaurant' },
+                                        { id: 'A92', type: 'طلب سفري', val: '١٨٥ ر.س', status: 'جاهز للاستلام', icon: 'takeout_dining' },
+                                        { id: '4', type: 'طاولة', val: '٢١٠ ر.س', status: 'تم الدفع', icon: 'restaurant' }
+                                    ].map((order, i) => (
+                                        <div key={i} onClick={() => navigate('/orders/detail')} className="p-6 flex items-center justify-between border-b border-zinc-50 hover:bg-zinc-50 cursor-pointer">
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center text-primary">
+                                                    <span className="material-symbols-outlined">{order.icon}</span>
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-bold">{order.type} #{order.id}</h4>
+                                                    <p className="text-sm text-zinc-400">قبل {5 + i * 7} دقائق</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-left">
+                                                <span className="block font-bold">{order.val}</span>
+                                                <span className="text-[10px] px-2 py-0.5 bg-zinc-100 rounded-full font-bold">{order.status}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="lg:col-span-4 space-y-6">
+                                <h3 className="text-xl font-bold">الحجوزات القادمة</h3>
+                                <div className="space-y-4">
+                                    <div onClick={() => navigate('/reservations/detail')} className="bg-white p-4 rounded-xl border-r-4 border-primary shadow-sm cursor-pointer">
+                                        <div className="flex justify-between items-start mb-3">
+                                            <div><h4 className="font-bold">أحمد السالم</h4><p className="text-xs text-zinc-400">طاولة VIP</p></div>
+                                            <span className="text-xs font-bold text-primary">٠٨:٣٠ م</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 text-xs text-zinc-500"><span className="material-symbols-outlined text-sm">group</span><span>٤ أشخاص</span></div>
+                                    </div>
+                                    <div className="bg-white p-4 rounded-xl border-r-4 border-tertiary shadow-sm">
+                                        <div className="flex justify-between items-start mb-3">
+                                            <div><h4 className="font-bold">سارة الكاظم</h4><p className="text-xs text-zinc-400">احتفال ميلاد</p></div>
+                                            <span className="text-xs font-bold text-primary">٠٩:١٥ م</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 text-xs text-zinc-500"><span className="material-symbols-outlined text-sm">group</span><span>٦ أشخاص</span></div>
+                                    </div>
+                                </div>
+                                <div className="relative bg-primary-container p-6 rounded-xl text-white overflow-hidden group">
+                                    <div className="relative z-10">
+                                        <h4 className="text-lg font-bold mb-2">ساعات الذروة</h4>
+                                        <p className="text-sm opacity-90 mb-4">من المتوقع زيادة الطلبات بنسبة ٢٠٪ في الساعة القادمة.</p>
+                                        <button onClick={() => navigate('/staff')} className="bg-white text-primary px-4 py-2 rounded-full text-xs font-bold hover:scale-105 transition-transform">تجهيز الطاقم</button>
+                                    </div>
+                                    <div className="absolute -bottom-4 -left-4 opacity-20 scale-150 rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                                        <span className="material-symbols-outlined text-9xl">local_fire_department</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                    <button onClick={() => navigate('/reservations/new')} className="fixed bottom-28 left-6 w-14 h-14 bg-gradient-to-br from-primary to-primary-container text-white rounded-full shadow-xl flex items-center justify-center active:scale-90 transition-transform z-40">
+                        <span className="material-symbols-outlined text-3xl">add</span>
+                    </button>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const Customers = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar title="إدارة العملاء" />
+                    <main className="pt-24 px-4 md:px-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <section className="lg:col-span-4 space-y-6">
+                            <div className="flex justify-between items-end">
+                                <div><h2 className="text-2xl font-bold">قائمة العملاء</h2><p className="text-sm text-zinc-400">١٢٤ عميل نشط</p></div>
+                                <button onClick={() => navigate('/customers/new')} className="bg-primary text-white px-4 py-2 rounded-full text-sm font-bold">إضافة عميل</button>
+                            </div>
+                            <div className="space-y-3">
+                                {[
+                                    { name: "أحمد المنصور", visits: 42, tag: "VIP", color: "أ" },
+                                    { name: "سارة خالد", visits: 15, tag: "عضو", color: "س" },
+                                    { name: "يوسف الصالح", visits: 8, tag: "عضو", color: "ي" }
+                                ].map((c, i) => (
+                                    <div key={i} onClick={() => navigate('/customers/detail')} className="bg-white p-4 rounded-xl shadow-sm border-r-4 border-primary cursor-pointer active:scale-95 transition-transform">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center text-primary font-bold text-lg">{c.color}</div>
+                                            <div className="flex-1">
+                                                <div className="flex justify-between"><h3 className="font-bold">{c.name}</h3><span className="bg-orange-100 text-primary px-2 py-0.5 rounded-full text-[10px] font-bold">{c.tag}</span></div>
+                                                <p className="text-xs text-zinc-400">{c.visits} طلبات • آخر زيارة: منذ يومين</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                        <section className="hidden lg:block lg:col-span-8 bg-white rounded-xl p-8 text-center text-zinc-400">
+                            <span className="material-symbols-outlined text-6xl mb-4">person_search</span>
+                            <p>اختر عميلاً من القائمة لعرض تفاصيله الكاملة</p>
+                        </section>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const CustomerDetail = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar showBack title="ملف العميل" />
+                    <main className="pt-24 px-6 max-w-5xl mx-auto space-y-8">
+                        <div className="bg-white p-8 rounded-xl shadow-sm flex flex-col md:flex-row gap-8 items-center md:items-start relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary-fixed opacity-20 rounded-bl-full"></div>
+                            <div className="relative">
+                                <div className="w-32 h-32 rounded-3xl overflow-hidden ring-4 ring-primary-fixed">
+                                    <img alt="أحمد" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwVcbkENQTu4mYbBEqdqtpMovoVlkJ_BFGAnI0Ha4IgWrY84HcPtfIjY-Gh0HMIdkb2eePH0YjG1zRf_Ix8EwbEOLe0Z9K4tnCeRjBprB93MG_hHYJUUz7laZgXcpIrGko_uBtjMfn_kv9Z8oZ8_3gF_SplCigJmTKFpBm5OlzxRvLdZ3lCDVbOEVQO23zMYJwds4k8TJOembU2udjXWxQup03vKt5WKwy8XLWGsSkf1V-Zl7co2UmDhquatru6G5qoQVRmcUjOh8" />
+                                </div>
+                                <div className="absolute -bottom-2 -left-2 bg-primary text-white text-[10px] px-3 py-1 rounded-full font-bold">VIP</div>
+                            </div>
+                            <div className="flex-1 text-center md:text-right space-y-4">
+                                <div><h2 className="text-3xl font-extrabold">أحمد المنصور</h2><p className="text-zinc-500">عميل متميز منذ يناير ٢٠٢٣</p></div>
+                                <div className="flex flex-wrap justify-center md:justify-start gap-3">
+                                    <span className="px-4 py-2 bg-zinc-100 rounded-full text-sm font-bold">050XXXXX89</span>
+                                    <span className="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full text-sm font-bold">واتساب</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
+                                <h4 className="text-lg font-bold flex items-center gap-2"><span className="material-symbols-outlined text-primary">favorite</span> التفضيلات</h4>
+                                <div className="grid grid-cols-1 gap-2">
+                                    <div className="p-3 bg-zinc-50 rounded-lg text-sm border-r-4 border-primary">يفضل الجلوس بجوار النافذة دائماً</div>
+                                    <div className="p-3 bg-red-50 rounded-lg text-sm border-r-4 border-red-500 text-red-700">حساسية شديدة من المكسرات</div>
+                                </div>
+                            </div>
+                            <div className="bg-white p-6 rounded-xl shadow-sm">
+                                <h4 className="text-lg font-bold mb-4 flex items-center gap-2"><span className="material-symbols-outlined text-primary">history</span> سجل الطلبات</h4>
+                                <div className="space-y-4">
+                                    {[1, 2].map(i => (
+                                        <div key={i} className="flex justify-between items-center text-sm border-b pb-2">
+                                            <div><p className="font-bold">طلب #882{i}</p><p className="text-zinc-400 text-xs">١٢ أكتوبر</p></div>
+                                            <span className="font-bold text-primary">٤٥٠ ر.س</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const Reservations = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar title="إدارة الحجوزات" />
+                    <main className="pt-24 px-6 max-w-7xl mx-auto space-y-6">
+                        <section className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                            <div><h2 className="text-3xl font-extrabold">الحجوزات اليوم</h2><p className="text-zinc-500">الثلاثاء، ٢٤ مايو</p></div>
+                            <button onClick={() => navigate('/reservations/new')} className="bg-primary text-white px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
+                                <span className="material-symbols-outlined">add</span> حجز جديد
+                            </button>
+                        </section>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {[
+                                { name: 'أحمد المنصور', time: '٠٨:٣٠ م', table: '١٢', pax: 4, note: 'ذكرى زواج' },
+                                { name: 'سارة الغامدي', time: '٠٩:١٥ م', table: 'VIP', pax: 2, note: 'حساسية مكسرات' },
+                                { name: 'فيصل خالد', time: '٠٧:٠٠ م', table: '٠٥', pax: 6, note: 'عشاء عمل' }
+                            ].map((res, i) => (
+                                <div key={i} className="bg-white rounded-xl p-6 shadow-sm group">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div onClick={() => navigate('/reservations/detail')} className="cursor-pointer">
+                                            <h3 className="text-xl font-bold mb-1">{res.name}</h3>
+                                            <span className="text-sm text-zinc-400 flex items-center gap-1"><span className="material-symbols-outlined text-[18px]">schedule</span> {res.time}</span>
+                                        </div>
+                                        <span className="bg-zinc-100 px-3 py-1 rounded-full text-xs font-bold">طاولة {res.table}</span>
+                                    </div>
+                                    <div className="bg-zinc-50 rounded-lg p-3 mb-6"><p className="text-sm italic">"{res.note}"</p></div>
+                                    <div className="flex gap-3">
+                                        <button onClick={() => navigate('/reservations/cancel')} className="flex-1 py-2.5 rounded-full bg-zinc-100 text-sm font-bold">إلغاء</button>
+                                        <button onClick={() => navigate('/reservations/arrive')} className="flex-1 py-2.5 rounded-full bg-primary text-white text-sm font-bold">تأكيد</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const ReservationDetail = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar showBack title="تفاصيل الحجز" />
+                    <main className="pt-24 px-6 max-w-md mx-auto space-y-6">
+                        <section className="bg-white p-6 rounded-xl shadow-sm flex flex-col items-center text-center">
+                            <div className="relative mb-4">
+                                <img alt="Profile" className="w-24 h-24 rounded-full object-cover border-4 border-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQG2Wy7U90HuxdatIIgZBj8-O6rlHiymcP4Y_2eYnjs8Tl-xbqOzMRc050RO3rxmrdeqpCHbcsz3G2j_8g96kWN38_OW2K4SAOhu39Q4_VBXfroOLDdr4mo6s04dtmXhg1O1mUD2LYZLPlJd8a8DXEnDgC_QYEkXpI07bjYdD8mjpZSOyuDQq1K9fTc_BZWyE_D6f8_8yNyuHNwY8LfhrTKENT409qbkXzM37JinTqFDDOZoPVdIuug-Bs1duf4jotwXkh28VhNA8" />
+                                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full">VIP</div>
+                            </div>
+                            <h2 className="text-2xl font-extrabold">أحمد السالم</h2>
+                            <div className="bg-zinc-100 px-4 py-1.5 rounded-full mt-2 text-sm font-bold">12 زيارة سابقة</div>
+                        </section>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-zinc-50 p-4 rounded-xl">
+                                <span className="material-symbols-outlined text-primary mb-1">calendar_today</span>
+                                <p className="text-xs text-zinc-400">التاريخ</p>
+                                <p className="font-bold">15 أكتوبر</p>
+                            </div>
+                            <div className="bg-zinc-50 p-4 rounded-xl">
+                                <span className="material-symbols-outlined text-primary mb-1">schedule</span>
+                                <p className="text-xs text-zinc-400">الوقت</p>
+                                <p className="font-bold">08:30 مساءً</p>
+                            </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-xl border-r-4 border-primary">
+                            <h3 className="font-bold text-sm mb-1">طلبات خاصة</h3>
+                            <p className="text-sm text-zinc-500 italic">احتفال بعيد ميلاد - يرجى توفير طاولة هادئة.</p>
+                        </div>
+                        <div className="fixed bottom-0 left-0 w-full p-6 bg-white shadow-lg z-40 space-y-3 rounded-t-3xl">
+                            <button onClick={() => navigate('/reservations/arrive')} className="w-full py-4 bg-primary text-white font-bold rounded-full">تأكيد الحضور</button>
+                            <button className="w-full py-4 bg-zinc-100 text-zinc-700 font-bold rounded-full">تعديل الحجز</button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const Marketing = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar title="التسويق والعروض" />
+                    <main className="pt-24 px-6 max-w-5xl mx-auto space-y-8">
+                        <section className="flex justify-between items-end">
+                            <div><h2 className="text-3xl font-extrabold">العروض الترويجية</h2><p className="text-zinc-500">إدارة حملاتك والوصول لعملائك</p></div>
+                            <button onClick={() => navigate('/marketing/new')} className="bg-primary text-white px-6 py-3 rounded-full font-bold shadow-lg">حملة جديدة</button>
+                        </section>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {[
+                                { title: 'تحلية عيد ميلاد مجانية', desc: 'يُرسل تلقائياً في يوم الميلاد', target: 'جميع المشتركين', color: 'primary' },
+                                { title: '25% للعملاء الأوفياء', desc: 'للمجموعات الأكثر من 4 أشخاص', target: 'العملاء VIP', color: 'tertiary' },
+                                { title: 'قهوة مجانية', desc: 'للزيارة الأولى بعد التسجيل', target: 'العملاء الجدد', color: 'secondary' }
+                            ].map((offer, i) => (
+                                <div key={i} onClick={() => navigate('/marketing/detail')} className={`bg-white rounded-xl p-6 shadow-sm border-r-4 border-${offer.color} cursor-pointer hover:shadow-md transition-all`}>
+                                    <div className="flex justify-between mb-2">
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">نشط الآن</span>
+                                        <span className="material-symbols-outlined text-zinc-300">campaign</span>
+                                    </div>
+                                    <h3 className="text-lg font-bold mb-1">{offer.title}</h3>
+                                    <p className="text-sm text-zinc-500 mb-4">{offer.desc}</p>
+                                    <div className="pt-4 border-t flex justify-between items-center">
+                                        <span className="text-xs font-bold text-primary">{offer.target}</span>
+                                        <span className="material-symbols-outlined">chevron_left</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const NewMarketing = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar showBack title="إنشاء عرض جديد" />
+                    <main className="pt-24 px-4 mt-6 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
+                        <div className="md:col-span-4">
+                            <div className="bg-white rounded-xl p-6 border-2 border-dashed border-zinc-200 text-center space-y-4">
+                                <div className="aspect-square bg-zinc-50 rounded-lg flex flex-col items-center justify-center text-zinc-400">
+                                    <span className="material-symbols-outlined text-4xl mb-2">add_a_photo</span>
+                                    <p className="text-xs">تحميل صورة العرض</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="md:col-span-8 space-y-6">
+                            <div className="bg-white p-8 rounded-xl space-y-6 shadow-sm">
+                                <div><label className="block text-sm font-bold text-zinc-500 mb-2">عنوان العرض</label><input className="w-full bg-zinc-50 border-none rounded-lg p-4" placeholder="مثال: خصم نهاية الأسبوع" type="text" /></div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div><label className="block text-sm font-bold text-zinc-500 mb-2">قيمة الخصم</label><input className="w-full bg-zinc-50 border-none rounded-lg p-4" placeholder="20%" type="text" /></div>
+                                    <div><label className="block text-sm font-bold text-zinc-500 mb-2">كود الخصم</label><input className="w-full bg-zinc-50 border-none rounded-lg p-4 uppercase" placeholder="WKD20" type="text" /></div>
+                                </div>
+                                <div><label className="block text-sm font-bold text-zinc-500 mb-2">الشروط</label><textarea className="w-full bg-zinc-50 border-none rounded-lg p-4" rows="3"></textarea></div>
+                                <button onClick={() => navigate('/marketing')} className="w-full bg-primary text-white py-4 rounded-full font-bold">حفظ ونشر العرض</button>
+                            </div>
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const StaffView = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar showBack title="توزيع الطاقم" />
+                    <main className="pt-24 px-6 max-w-4xl mx-auto space-y-6">
+                        <div className="bg-primary-container p-6 rounded-2xl text-white relative overflow-hidden">
+                            <div className="relative z-10">
+                                <h3 className="text-2xl font-black">المناوبة المسائية</h3>
+                                <p className="opacity-80">٢٤ مايو • ١٥ موظف نشط</p>
+                            </div>
+                            <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-br-full -translate-x-8 -translate-y-8"></div>
+                        </div>
+                        <section className="space-y-4">
+                            <h4 className="font-bold text-zinc-500">حالة الحضور الفورية</h4>
+                            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+                                {[1, 2, 3, 4, 5].map(i => (
+                                    <div key={i} className="flex-shrink-0 flex flex-col items-center gap-2">
+                                        <div className="w-16 h-16 rounded-full border-2 border-primary p-0.5"><img className="w-full h-full rounded-full object-cover" src={`https://i.pravatar.cc/100?u=${i}`} /></div>
+                                        <span className="text-[10px] font-bold">موظف {i}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                        <section className="space-y-4">
+                            <h4 className="font-bold text-zinc-500">توزيع المهام</h4>
+                            <div className="bg-white p-4 rounded-xl flex justify-between items-center shadow-sm">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center text-primary"><span className="material-symbols-outlined">supervisor_account</span></div>
+                                    <div><p className="font-bold">مدراء الصالة</p><p className="text-xs text-zinc-400">٢ معينين</p></div>
+                                </div>
+                                <button className="px-4 py-2 bg-zinc-100 rounded-lg text-xs font-bold">تعديل</button>
+                            </div>
+                            <div className="bg-white p-4 rounded-xl flex justify-between items-center shadow-sm">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700"><span className="material-symbols-outlined">restaurant</span></div>
+                                    <div><p className="font-bold">طاقم الخدمة</p><p className="text-xs text-zinc-400">٨ نشطين</p></div>
+                                </div>
+                                <button className="px-4 py-2 bg-zinc-100 rounded-lg text-xs font-bold">تعديل</button>
+                            </div>
+                        </section>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const SuccessPage = ({ message = "تمت العملية بنجاح", sub = "يمكنك العودة للرئيسية الآن" }) => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+                    <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center mb-6 shadow-xl shadow-orange-200">
+                        <span className="material-symbols-outlined text-white text-5xl">check_circle</span>
+                    </div>
+                    <h2 className="text-3xl font-black mb-2">{message}</h2>
+                    <p className="text-zinc-500 mb-10">{sub}</p>
+                    <button onClick={() => navigate('/')} className="w-full max-w-xs py-4 bg-primary text-white font-bold rounded-full">العودة للرئيسية</button>
+                </div>
+            );
+        };
+
+        const CancellationPage = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+                    <div className="w-20 h-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-6">
+                        <span className="material-symbols-outlined text-4xl">person_off</span>
+                    </div>
+                    <h2 className="text-2xl font-black mb-4">هل تريد إلغاء الحجز؟</h2>
+                    <p className="text-zinc-500 mb-8 max-w-xs">سيؤثر هذا الإجراء على سجل العميل وسيتم تحرير الطاولة فوراً.</p>
+                    <div className="w-full max-w-xs space-y-3">
+                        <button onClick={() => navigate('/reservations/success')} className="w-full py-4 bg-red-600 text-white font-bold rounded-full">تأكيد الإلغاء</button>
+                        <button onClick={() => navigate(-1)} className="w-full py-4 bg-zinc-100 text-zinc-500 font-bold rounded-full">تراجع</button>
+                    </div>
+                </div>
+            );
+        };
+
+        const Orders = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar title="الطلبات النشطة" />
+                    <main className="pt-24 px-6 max-w-4xl mx-auto space-y-6">
+                        <div className="flex gap-2 overflow-x-auto no-scrollbar">
+                            <button className="px-6 py-2 bg-primary text-white rounded-full text-sm font-bold">الكل</button>
+                            <button className="px-6 py-2 bg-zinc-100 rounded-full text-sm font-medium">نشط</button>
+                            <button className="px-6 py-2 bg-zinc-100 rounded-full text-sm font-medium">قيد التحضير</button>
+                        </div>
+                        <div className="space-y-4">
+                            {[
+                                { id: '1284', table: '12', time: '١٥ دقيقة', status: 'تحضير', color: 'primary' },
+                                { id: '1285', table: 'خارجي', time: '٥ دقائق', status: 'نشط', color: 'tertiary' }
+                            ].map((order, i) => (
+                                <div key={i} onClick={() => navigate('/orders/detail')} className={`bg-white p-5 rounded-xl border-r-4 border-${order.color} shadow-sm cursor-pointer active:scale-95 transition-all`}>
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div>
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className={`text-xs font-bold text-${order.color} px-2 py-0.5 bg-zinc-50 rounded`}>#{order.id}</span>
+                                                <span className="font-bold">طاولة {order.table}</span>
+                                            </div>
+                                            <p className="text-xs text-zinc-400">منذ {order.time}</p>
+                                        </div>
+                                        <div className="bg-zinc-50 px-3 py-1 rounded-full text-[10px] font-bold">قيد {order.status}</div>
+                                    </div>
+                                    <div className="flex justify-between items-end">
+                                        <div className="flex -space-x-2"><div className="w-7 h-7 bg-zinc-100 rounded-full border-2 border-white flex items-center justify-center text-[10px]">🍕</div><div className="w-7 h-7 bg-zinc-100 rounded-full border-2 border-white flex items-center justify-center text-[10px]">🥤</div></div>
+                                        <div className="text-left"><p className="text-lg font-black text-primary">250 ر.س</p></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        // --- App Component ---
+
+        const App = () => {
+            return (
+                <MemoryRouter>
+                    <Routes>
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/customers" element={<Customers />} />
+                        <Route path="/customers/detail" element={<CustomerDetail />} />
+                        <Route path="/customers/new" element={<SuccessPage message="تمت إضافة العميل" sub="الآن يمكنك البدء في تسجيل حجوزاته" />} />
+                        <Route path="/reservations" element={<Reservations />} />
+                        <Route path="/reservations/detail" element={<ReservationDetail />} />
+                        <Route path="/reservations/new" element={<SuccessPage message="تم تأكيد الحجز" sub="تم إرسال رسالة تأكيد للعميل" />} />
+                        <Route path="/reservations/cancel" element={<CancellationPage />} />
+                        <Route path="/reservations/arrive" element={<SuccessPage message="تم تأكيد الوصول" sub="تم تعيين الطاولة وتنبيه طاقم الخدمة" />} />
+                        <Route path="/reservations/success" element={<SuccessPage message="تم الإلغاء" sub="تم تحديث الجدول الزمني" />} />
+                        <Route path="/marketing" element={<Marketing />} />
+                        <Route path="/marketing/new" element={<NewMarketing />} />
+                        <Route path="/marketing/detail" element={<SuccessPage message="تم تحديث العرض" sub="سيتم إخطار الفئات المستهدفة فوراً" />} />
+                        <Route path="/staff" element={<StaffView />} />
+                        <Route path="/orders" element={<Orders />} />
+                        <Route path="/orders/detail" element={<SuccessPage message="تم تحديث حالة الطلب" sub="تم إخطار الطاولة بالتغيير" />} />
+                    </Routes>
+                </MemoryRouter>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>

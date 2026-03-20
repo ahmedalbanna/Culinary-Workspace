@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>إدارة التسويق - The Digital Maître D’</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#e67e22",
+                        "on-primary-container": "#502600",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#ffb783",
+                        "on-primary-fixed-variant": "#713700",
+                        "on-background": "#191c1d",
+                        "tertiary-fixed-dim": "#86cfff",
+                        "on-surface": "#191c1d",
+                        "tertiary-container": "#00a3e4",
+                        "on-tertiary-fixed": "#001e2e",
+                        "tertiary": "#00658f",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#ffdcc5",
+                        "on-surface-variant": "#564337",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#00354d",
+                        "error-container": "#ffdad6",
+                        "background": "#f8f9fa",
+                        "surface-tint": "#944a00",
+                        "tertiary-fixed": "#c7e7ff",
+                        "on-primary-fixed": "#301400",
+                        "inverse-primary": "#ffb783",
+                        "on-secondary-fixed": "#091d2e",
+                        "on-secondary-container": "#526478",
+                        "surface-variant": "#e1e3e4",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-high": "#e7e8e9",
+                        "outline": "#897365",
+                        "on-tertiary-fixed-variant": "#004c6d",
+                        "secondary-fixed-dim": "#b5c8df",
+                        "surface-dim": "#d9dadb",
+                        "secondary-container": "#cfe2f9",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e1e3e4",
+                        "primary": "#944a00",
+                        "outline-variant": "#dcc1b1",
+                        "secondary-fixed": "#d1e4fb",
+                        "surface-container": "#edeeef",
+                        "surface-bright": "#f8f9fa",
+                        "on-secondary-fixed-variant": "#36485b",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface": "#f8f9fa",
+                        "surface-container-low": "#f3f4f5",
+                        "secondary": "#4e6073"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); }
+        .primary-gradient { background: linear-gradient(135deg, #944A00 0%, #E67E22 100%); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img alt="Restaurant Manager Profile" class="w-full h-full object-cover" data-alt="Professional restaurant manager portrait photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOq0kuMb_MKAFMfwau0BmqfinSJRGVCRJhCIFJhIQWq6eDGuJbi6WhJh5W2H4mkPwyzspt-yawHt2PuMKqJ1bRfMVusPkCiUe89L5z5hoqRpkRi-DM-x38twRon_7A7l5CgTMBjq6oQOhPOP20u0d7Mtp7HSZLJR3JZ7e8MEknjx5n02GzlZ8aNBcPEOtMJ4xhqkJgAtRalR3dpm3cgWnLiPC8L7NQX2L0YiEMXZWVZTdsiw-OsbcvxeQwdA8U-fsYN1QRgvEM2Sk"/>
+</div>
+<h1 class="text-xl font-extrabold text-orange-800 dark:text-orange-400 font-plus-jakarta-sans tracking-tight">The Digital Maître D’</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-orange-50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-orange-700">notifications</span>
+</button>
+</div>
+</header>
+<!-- NavigationDrawer (Desktop Only) -->
+<aside class="hidden md:flex fixed right-0 top-0 h-screen w-72 flex-col p-4 bg-slate-50 dark:bg-slate-950 shadow-[0_20px_40px_rgba(25,28,29,0.06)] rounded-l-2xl z-40 border-l border-slate-100 dark:border-slate-800">
+<div class="mb-10 pt-20 px-4">
+<h2 class="text-2xl font-black text-orange-700 dark:text-orange-500 mb-1">Saffron &amp; Slate</h2>
+<p class="text-slate-500 text-sm">Evening Service</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="text-slate-600 dark:text-slate-400 px-4 py-3 hover:bg-slate-200/50 transition-all duration-300 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-plus-jakarta-sans text-sm font-medium">Service Dashboard</span>
+</a>
+<a class="text-slate-600 dark:text-slate-400 px-4 py-3 hover:bg-slate-200/50 transition-all duration-300 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-plus-jakarta-sans text-sm font-medium">Customers</span>
+</a>
+<a class="text-slate-600 dark:text-slate-400 px-4 py-3 hover:bg-slate-200/50 transition-all duration-300 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-plus-jakarta-sans text-sm font-medium">Reservations</span>
+</a>
+<a class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 rounded-xl font-bold px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-plus-jakarta-sans text-sm">Marketing</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="pt-24 pb-32 md:pb-12 md:pr-80 px-6 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+<div>
+<h2 class="text-3xl font-bold text-on-surface tracking-tight mb-2">إدارة التسويق</h2>
+<p class="text-on-surface-variant">تحكم في حملاتك الإعلانية وعروضك الخاصة لزيادة الإيرادات.</p>
+</div>
+<button class="primary-gradient text-on-primary px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add_circle</span>
+<span>إنشاء عرض جديد</span>
+</button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Active Campaigns Section -->
+<section class="md:col-span-8 flex flex-col gap-6">
+<div class="bg-surface-container-low rounded-2xl p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                            الحملات النشطة
+                        </h3>
+<span class="text-sm font-medium text-primary bg-primary-fixed px-3 py-1 rounded-full">3 حملات حالية</span>
+</div>
+<div class="space-y-4">
+<!-- Campaign Item -->
+<div class="bg-surface-container-lowest p-5 rounded-xl flex items-center justify-between hover:shadow-md transition-shadow">
+<div class="flex gap-4 items-center">
+<div class="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">celebration</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">مهرجان العشاء الصيفي</h4>
+<p class="text-sm text-on-surface-variant">15 يونيو - 15 يوليو</p>
+</div>
+</div>
+<div class="text-left">
+<div class="text-2xl font-black text-primary">42%</div>
+<div class="text-xs text-on-secondary-fixed-variant uppercase tracking-wider">معدل الاسترداد</div>
+</div>
+</div>
+<!-- Campaign Item -->
+<div class="bg-surface-container-lowest p-5 rounded-xl flex items-center justify-between hover:shadow-md transition-shadow">
+<div class="flex gap-4 items-center">
+<div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">coffee</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">ساعة السعادة الصباحية</h4>
+<p class="text-sm text-on-surface-variant">يومياً 8:00 - 10:00</p>
+</div>
+</div>
+<div class="text-left">
+<div class="text-2xl font-black text-primary">28%</div>
+<div class="text-xs text-on-secondary-fixed-variant uppercase tracking-wider">معدل الاسترداد</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Offers Visual Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Offer Card 1 -->
+<div class="relative overflow-hidden rounded-2xl aspect-[4/3] group">
+<img alt="Birthday Offer" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Elegant birthday cake with candles in a moody setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc4GH1hJGwGX3OZUK-uHiX8uBeaTwq1mj_LoKZd7AuT-PDBsNTdaRZ3zZonvvvDuzpWEFLqhesgyO9gfzLDY1RtTHnsRe0mkGlgFY34QRIAHkqz3DbOp0agB8STrUhRmtzBI8dv4q47tLj3vKmT6bm8C_uUinFXXjjiqSysWp9AzFU4_-8fNLIsjEez-C8YqT-d8i_tMdoy5FCdkDz7Mr2XWa4f3owXIxMfVDRnUnBqdohD3v_jsXNve3sCKqonunXQNTHbDxFqnA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-6 flex flex-col justify-end text-white">
+<span class="bg-primary text-[10px] font-bold py-1 px-2 rounded w-fit mb-2">أعياد الميلاد</span>
+<h4 class="text-lg font-bold mb-1">خصم 15% لأعياد الميلاد</h4>
+<p class="text-sm text-white/80">صالح طوال شهر الميلاد للعميل.</p>
+</div>
+</div>
+<!-- Offer Card 2 -->
+<div class="relative overflow-hidden rounded-2xl aspect-[4/3] group">
+<img alt="Family Weekend" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Happy family dining at a luxury restaurant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQuViRZlJvpXeuSb4JB1YX9eOrehKh1CL___cW7m6r5gQ61YrxvgaONYw3nN0YShexTq0aUTtvFumdM9lE0gHP2pTTwupymnFgdELLoPdNuAxk88BPFZjfRC76cUKPrHCDNYBFCYyA1bClbQnZjQHRLtvY1XfgQ8-7KR-H6ke6by-Fgi6lX-B4Ocog23FHd9SDp7IoMJP_ztgV7rAndE-Q-OfFnqlATtSaE6R9E_GRoc02DfLtHEUI8AW079_xgiJhPnPzkwjioOo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-6 flex flex-col justify-end text-white">
+<span class="bg-tertiary text-[10px] font-bold py-1 px-2 rounded w-fit mb-2">نهاية الأسبوع</span>
+<h4 class="text-lg font-bold mb-1">وجبة أطفال مجانية</h4>
+<p class="text-sm text-white/80">عند طلب وجبتين رئيسيتين أيام السبت.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Loyalty Program & Stats -->
+<aside class="md:col-span-4 flex flex-col gap-6">
+<!-- Loyalty Summary -->
+<div class="bg-primary-fixed rounded-3xl p-8 relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-on-primary-fixed text-lg font-bold mb-4">برنامج الولاء</h3>
+<div class="mb-6">
+<div class="text-4xl font-black text-on-primary-fixed">1,284</div>
+<div class="text-sm text-on-primary-fixed-variant">عضو نشط حالياً</div>
+</div>
+<div class="w-full bg-white/30 h-2 rounded-full mb-6">
+<div class="bg-primary w-3/4 h-full rounded-full"></div>
+</div>
+<div class="flex justify-between text-xs font-bold text-on-primary-fixed-variant">
+<span>هدف الربع: 1,500</span>
+<span>85%</span>
+</div>
+</div>
+<div class="absolute -bottom-6 -right-6 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+</div>
+<!-- Top Customers -->
+<div class="bg-surface-container-high rounded-2xl p-6">
+<h3 class="text-lg font-bold mb-4">أفضل العملاء</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden">
+<img alt="Customer" class="w-full h-full object-cover" data-alt="Portrait of a female customer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8ojzgxRL4w9PYmBzb1hgNb_HeQtfN6dUzPF-CkyTQcRw_sS1MYpPWYhGKG0WLE5Ra9oV2U6pml37X-dSOHkFM8aJKV0XmZCg1Ml-Q2jB5ryZgRIrLSsLXRsybnAFLnMdly8yxzKO8LBJpG6TOOwSyr3JXrJQNPBLzQ99Jj0odM5kcLH9hBuPSADPVddUpLUFosYtEmK2PZueCMXmWMw-wVTgMcNNPNipC2gDj1fyUMG2e4QXoZbzhicu7sPJwGyto3jHN39eg_90"/>
+</div>
+<div class="flex-1">
+<div class="text-sm font-bold">ليلى أحمد</div>
+<div class="text-[10px] text-on-surface-variant">450 نقطة</div>
+</div>
+<div class="text-primary font-bold">#1</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden">
+<img alt="Customer" class="w-full h-full object-cover" data-alt="Portrait of a male customer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwXkHl1n2gtTSjC74bzAXLJi7X7_BdYTyNcfBSpiZTOdH_dONS-VgEdE61nnkhO__y9LS5TDgr_z7oWmuAM0SI-TG6O7b6hDu-_baWYBFzr_vs5MEEl-J62cNrkCceH_74LbEPdipfgFBQF0CjbD9W3X0zbPIBSu9RsNAZsKIE44FjpEin-upRKBuMJqLhDz-slGw4WOtpf5BZsf5cRI1nzp6uU3VGZx_Yuf2Xnz1icrZLFYBfopplLHy0YMNI-5hBtDvsXgFgpmE"/>
+</div>
+<div class="flex-1">
+<div class="text-sm font-bold">عمر خالد</div>
+<div class="text-[10px] text-on-surface-variant">380 نقطة</div>
+</div>
+<div class="text-primary font-bold">#2</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden">
+<img alt="Customer" class="w-full h-full object-cover" data-alt="Portrait of a young woman customer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_D4Qp1WjUzkie4gDHEez51wNFB_6Lz09CyyeXf_Rbhz8MKhpn_H0A9sK71DVPOlUUpabPZNNmJ7txWTlnSWJECCEGV6QXkhLJ4T3z2-oN8TR0HubcPbdWu5H5-oIzv4lDAoCiXyFbTqSKlh0I8C9U-jHu-_IGzsW_tbgLwMb8MlzkCfTQ9ZZKtig3MIDDXaRx8fcc7fPrHVVBhqVWrijygV5wRYxYXVYhMta9rtPQzp73uLv-J051clXYm2RCvl6i0pC6iHFGJ9I"/>
+</div>
+<div class="flex-1">
+<div class="text-sm font-bold">سارة يوسف</div>
+<div class="text-[10px] text-on-surface-variant">310 نقطة</div>
+</div>
+<div class="text-primary font-bold">#3</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 text-sm font-bold text-primary hover:bg-white/50 rounded-lg transition-colors">مشاهدة الكل</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-t-3xl border-t border-slate-100 dark:border-slate-800 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+<a class="flex flex-col items-center text-slate-400 dark:text-slate-500 font-plus-jakarta-sans text-[11px] font-semibold" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span>Guests</span>
+</a>
+<a class="flex flex-col items-center text-slate-400 dark:text-slate-500 font-plus-jakarta-sans text-[11px] font-semibold" href="#">
+<span class="material-symbols-outlined mb-1">event</span>
+<span>Bookings</span>
+</a>
+<a class="flex flex-col items-center text-orange-700 dark:text-orange-400 font-plus-jakarta-sans text-[11px] font-semibold" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">local_offer</span>
+<span>Offers</span>
+</a>
+<a class="flex flex-col items-center text-slate-400 dark:text-slate-500 font-plus-jakarta-sans text-[11px] font-semibold" href="#">
+<span class="material-symbols-outlined mb-1">analytics</span>
+<span>Stats</span>
+</a>
+</nav>
+</body></html>

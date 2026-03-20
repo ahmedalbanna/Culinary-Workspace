@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus_Jakarta_Sans:wght@400;500;600;700;800&amp;family=Tajawal:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#001e2e",
+              "surface-container-highest": "#e1e3e4",
+              "secondary-container": "#cfe2f9",
+              "on-error-container": "#93000a",
+              "surface-container": "#edeeef",
+              "surface-bright": "#f8f9fa",
+              "secondary": "#4e6073",
+              "inverse-surface": "#2e3132",
+              "on-primary": "#ffffff",
+              "tertiary-fixed-dim": "#86cfff",
+              "on-secondary-container": "#526478",
+              "on-tertiary-container": "#00354d",
+              "on-secondary": "#ffffff",
+              "on-surface-variant": "#564337",
+              "on-secondary-fixed-variant": "#36485b",
+              "inverse-primary": "#ffb783",
+              "surface-container-high": "#e7e8e9",
+              "surface": "#f8f9fa",
+              "on-background": "#191c1d",
+              "on-secondary-fixed": "#091d2e",
+              "surface-variant": "#e1e3e4",
+              "on-primary-fixed": "#301400",
+              "on-tertiary-fixed-variant": "#004c6d",
+              "tertiary-container": "#00a3e4",
+              "surface-tint": "#944a00",
+              "on-primary-container": "#502600",
+              "inverse-on-surface": "#f0f1f2",
+              "outline": "#897365",
+              "on-error": "#ffffff",
+              "error-container": "#ffdad6",
+              "tertiary": "#00658f",
+              "error": "#ba1a1a",
+              "tertiary-fixed": "#c7e7ff",
+              "on-surface": "#191c1d",
+              "surface-container-low": "#f3f4f5",
+              "primary-container": "#e67e22",
+              "primary-fixed-dim": "#ffb783",
+              "primary-fixed": "#ffdcc5",
+              "surface-dim": "#d9dadb",
+              "outline-variant": "#dcc1b1",
+              "on-primary-fixed-variant": "#713700",
+              "secondary-fixed-dim": "#b5c8df",
+              "surface-container-lowest": "#ffffff",
+              "background": "#f8f9fa",
+              "secondary-fixed": "#d1e4fb",
+              "primary": "#944a00",
+              "on-tertiary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Tajawal", "Plus Jakarta Sans"],
+              "body": ["Tajawal", "Plus Jakarta Sans"],
+              "label": ["Tajawal", "Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "1rem", "xl": "1.25rem", "2xl": "1.5rem", "3xl": "2rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body { font-family: 'Tajawal', sans-serif; }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="text-orange-800 dark:text-orange-400 active:scale-95 duration-200 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-xl text-orange-900 dark:text-orange-50">Table 12 Details</h1>
+</div>
+<button class="text-orange-800 dark:text-orange-400 active:scale-95 duration-200 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<main class="pt-24 px-6 max-w-5xl mx-auto space-y-6">
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Quick Status Card -->
+<div class="md:col-span-2 bg-surface-container-lowest rounded-2xl p-8 shadow-[0_20px_40px_rgba(25,28,29,0.04)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed opacity-10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+<div class="flex flex-wrap justify-between items-start gap-4 relative z-10">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="px-4 py-1.5 bg-secondary-fixed text-on-secondary-fixed rounded-full text-sm font-bold flex items-center gap-2">
+<span class="w-2 h-2 bg-orange-600 rounded-full animate-pulse"></span>
+                                مشغول (Busy)
+                            </span>
+<span class="text-on-surface-variant text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+                                45 دقيقة منذ الجلوس
+                            </span>
+</div>
+<h2 class="text-3xl font-extrabold text-on-surface mt-4 tracking-tight">أحمد المنصور</h2>
+<div class="mt-2 inline-flex items-center gap-2 px-3 py-1 bg-primary-fixed text-on-primary-fixed rounded-lg text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm" data-icon="stars" style="font-variation-settings: 'FILL' 1;">stars</span>
+                            VIP Client
+                        </div>
+</div>
+<div class="text-left md:text-right">
+<p class="text-on-surface-variant text-sm font-semibold uppercase tracking-widest mb-1">المبلغ الإجمالي</p>
+<p class="text-4xl font-black text-primary leading-none">488.75 <span class="text-lg font-bold">SAR</span></p>
+</div>
+</div>
+<div class="mt-8 flex flex-wrap gap-4 border-t border-outline-variant/15 pt-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="person">person</span>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase">النوادل</p>
+<p class="font-bold text-on-surface">خالد</p>
+</div>
+</div>
+<div class="flex items-center gap-3 mr-auto">
+<button class="flex items-center gap-2 text-primary font-bold text-sm hover:underline active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+                            إضافة طلب
+                        </button>
+</div>
+</div>
+</div>
+<!-- Notes Section -->
+<div class="bg-surface-container-low rounded-2xl p-6 flex flex-col justify-between">
+<div>
+<h3 class="text-on-surface-variant text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="sticky_note_2">sticky_note_2</span>
+                        ملاحظات خاصة
+                    </h3>
+<ul class="space-y-3">
+<li class="p-3 bg-surface-container-lowest rounded-xl flex items-start gap-3 shadow-sm">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="window">window</span>
+<span class="text-sm font-medium">يفضل الجلوس بجانب النافذة</span>
+</li>
+<li class="p-3 bg-error-container/40 rounded-xl flex items-start gap-3">
+<span class="material-symbols-outlined text-error text-lg" data-icon="warning">warning</span>
+<span class="text-sm font-bold text-on-error-container">حساسية من المكسرات</span>
+</li>
+</ul>
+</div>
+<div class="mt-6">
+<button class="w-full py-3 rounded-xl border border-dashed border-outline-variant text-on-surface-variant font-bold text-sm hover:bg-surface-container-highest transition-colors">
+                        تحرير الملاحظات
+                    </button>
+</div>
+</div>
+<!-- Order List Area -->
+<div class="md:col-span-3 space-y-4">
+<div class="flex items-center justify-between px-2">
+<h3 class="text-xl font-extrabold flex items-center gap-3">
+                        ملخص الطلب الحالي
+                        <span class="text-sm font-normal text-on-surface-variant">(4 أصناف)</span>
+</h3>
+</div>
+<div class="bg-surface-container-lowest rounded-3xl overflow-hidden shadow-sm">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50">
+<th class="px-6 py-4 text-xs font-black text-on-surface-variant uppercase tracking-wider">الصنف</th>
+<th class="px-6 py-4 text-xs font-black text-on-surface-variant uppercase tracking-wider">الكمية</th>
+<th class="px-6 py-4 text-xs font-black text-on-surface-variant uppercase tracking-wider">السعر</th>
+<th class="px-6 py-4 text-xs font-black text-on-surface-variant uppercase tracking-wider">الحالة</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-orange-50 overflow-hidden flex-shrink-0">
+<img alt="Wagyu Steak" class="w-full h-full object-cover" data-alt="Premium grilled wagyu steak dish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5eKjI_NO48U2I6M6i4UHi1x8PQWyF4Z7o969log-uWNq5EqLR70Wi2Hu1X34dMBwbyhXgSCFmdgzKLjvS-YC2cPPfeHRKNcYisYTVq5JgeTdeCpbVDbCFBk1gYk7miqFgA14AezHXd5PrfhPZUUbsFOKAFv-yLmHqamEyq7uj11Ej_3mxbpQoMkJk8MSLcplqtG_vmkoRVJ9MisaQI6LK2c4YLigLDlZIq0YEEklFtJpLx-bxbCGWgHRitpC5Bdq9jcn9rxKrm3M"/>
+</div>
+<div>
+<p class="font-bold text-on-surface">Wagyu Steak</p>
+<p class="text-xs text-on-surface-variant">Medium Well, Peppercorn Sauce</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 font-bold text-on-surface">1</td>
+<td class="px-6 py-5 font-black text-primary">320.00 SAR</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-[10px] font-bold uppercase">قُدمت</span>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-orange-50 overflow-hidden flex-shrink-0">
+<img alt="Quinoa Salad" class="w-full h-full object-cover" data-alt="Fresh quinoa and avocado salad" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyqrJK0OwoPBq25U4Ge7kX9faOWxz3KAcdnPdbre70eon8T8x5mpgFszHn6i2Ivsp1gJyoMlGC04rEAsXuUMBCNhdhp5W2gRhLoadKziqtbrd1hb-Y-Zs0GG6RiMJUax9BBsUx9TDx3LN2CT6h8g3101Z0shdVm9tNDD_geeT346ENLNFO3zhRWRvOaYkkULXWHNyKhS4PgtYtZd0qwLnx-fJrLKDPXRPF5zwFslVRu1yiissbBxETBrqtfpaIrZu-aUCsAIDl3QA"/>
+</div>
+<div>
+<p class="font-bold text-on-surface">Quinoa Salad</p>
+<p class="text-xs text-on-surface-variant">No Dressing</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 font-bold text-on-surface">1</td>
+<td class="px-6 py-5 font-black text-primary">85.50 SAR</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-[10px] font-bold uppercase">قُدمت</span>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-orange-50 overflow-hidden flex-shrink-0">
+<img alt="Orange Juice" class="w-full h-full object-cover" data-alt="Glass of fresh orange juice" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWBasAFfOP4eX0eS13uvqBONePqzrSXpYyYYKbhz5Lk1wsMO7qtSdTVU3JktvEqVECGLdAVlGiBjT16-Ss08F6NvZ1NR92HHdwqw6imomS3ia3s5TXH0ZcDWZ6KKPCpdNsceodlijbKSUDRdoc5A1WXnCPYwpXYkpWOqAU5b-1ZrM2gsx4pk95rUL1V279Gpo4CKnNjXiRv3aedW9K9FxRGsYclHcqMqLX9lGPChbcpd2FWLwymhyc2vCrJQm9OT9Qpygf3znZ4c8"/>
+</div>
+<div>
+<p class="font-bold text-on-surface">Fresh Orange Juice</p>
+<p class="text-xs text-on-surface-variant">Cold, No Sugar</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 font-bold text-on-surface">2</td>
+<td class="px-6 py-5 font-black text-primary">83.25 SAR</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-[10px] font-bold uppercase">قيد التحضير</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Actions -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-2xl z-40">
+<div class="bg-white/80 backdrop-blur-2xl rounded-3xl p-4 shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col sm:flex-row gap-3">
+<button class="flex-1 bg-secondary-container text-on-secondary-container py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:brightness-95 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="print">print</span>
+                    طباعة الفاتورة
+                </button>
+<button class="flex-[1.5] bg-gradient-to-br from-primary to-primary-container text-on-primary py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                    إغلاق الطاولة وتدقيق الحساب
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl rounded-t-3xl border-t border-slate-100/10 shadow-[0_-10px_40px_rgba(25,28,29,0.04)]">
+<div class="flex flex-col items-center justify-center bg-orange-100 dark:bg-orange-900/40 text-orange-900 dark:text-orange-100 rounded-2xl px-5 py-2 active:scale-90 transition-transform duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="grid_view" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider mt-1">Floor</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 px-5 py-2 hover:text-orange-600 dark:hover:text-orange-400 active:scale-90 transition-transform duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider mt-1">Orders</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 px-5 py-2 hover:text-orange-600 dark:hover:text-orange-400 active:scale-90 transition-transform duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="event_available">event_available</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider mt-1">Reservations</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 px-5 py-2 hover:text-orange-600 dark:hover:text-orange-400 active:scale-90 transition-transform duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider mt-1">Staff</span>
+</div>
+</nav>
+</body></html>

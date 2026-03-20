@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-highest": "#e1e3e4",
+              "on-background": "#191c1d",
+              "tertiary-fixed": "#c7e7ff",
+              "surface-variant": "#e1e3e4",
+              "on-tertiary-container": "#00354d",
+              "on-primary-fixed": "#301400",
+              "outline": "#897365",
+              "on-surface-variant": "#564337",
+              "on-secondary-fixed-variant": "#36485b",
+              "on-primary": "#ffffff",
+              "on-tertiary-fixed": "#001e2e",
+              "tertiary-fixed-dim": "#86cfff",
+              "primary": "#944a00",
+              "tertiary-container": "#00a3e4",
+              "on-primary-fixed-variant": "#713700",
+              "inverse-primary": "#ffb783",
+              "primary-fixed-dim": "#ffb783",
+              "on-tertiary-fixed-variant": "#004c6d",
+              "on-secondary": "#ffffff",
+              "secondary-fixed-dim": "#b5c8df",
+              "on-error-container": "#93000a",
+              "on-secondary-fixed": "#091d2e",
+              "outline-variant": "#dcc1b1",
+              "secondary": "#4e6073",
+              "primary-container": "#e67e22",
+              "tertiary": "#00658f",
+              "error": "#ba1a1a",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#944a00",
+              "secondary-fixed": "#d1e4fb",
+              "inverse-surface": "#2e3132",
+              "on-primary-container": "#502600",
+              "surface-container": "#edeeef",
+              "on-tertiary": "#ffffff",
+              "on-surface": "#191c1d",
+              "on-secondary-container": "#526478",
+              "surface-dim": "#d9dadb",
+              "background": "#f8f9fa",
+              "surface-container-low": "#f3f4f5",
+              "secondary-container": "#cfe2f9",
+              "primary-fixed": "#ffdcc5",
+              "surface-bright": "#f8f9fa",
+              "surface-container-high": "#e7e8e9",
+              "surface": "#f8f9fa",
+              "inverse-on-surface": "#f0f1f2",
+              "on-error": "#ffffff",
+              "error-container": "#ffdad6"
+            },
+            fontFamily: {
+              "headline": ["Tajawal", "Plus Jakarta Sans"],
+              "body": ["Tajawal", "Plus Jakarta Sans"],
+              "label": ["Tajawal", "Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "1rem", "xl": "1.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Tajawal', 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-nav { backdrop-filter: blur(20px); }
+        input:focus + .focus-line, textarea:focus + .focus-line { width: 100%; }
+        .focus-line { width: 0%; transition: width 0.3s ease; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-[#F8F9FA] dark:bg-slate-900 flex justify-between items-center w-full px-6 py-4">
+<div class="flex items-center gap-4">
+<button class="hover:bg-[#F3F4F5] dark:hover:bg-slate-800 transition-colors p-2 rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface">arrow_forward</span>
+</button>
+<h1 class="font-headline font-bold text-on-surface text-xl">إنشاء عرض جديد</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="hover:bg-[#F3F4F5] dark:hover:bg-slate-800 transition-colors p-2 rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface">more_vert</span>
+</button>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-4 mt-6">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Left Column: Image Upload & Preview -->
+<div class="md:col-span-4 space-y-6">
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_20px_40px_rgba(25,28,29,0.04)] text-center group cursor-pointer border-2 border-dashed border-outline-variant/30 hover:border-primary/50 transition-all">
+<div class="aspect-square rounded-lg bg-surface-container-low flex flex-col items-center justify-center gap-3 overflow-hidden relative">
+<img class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity" data-alt="Professional food photography for promotional offer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5AdIUFrqhnCakjcP9WS-WfkCKzIxnXygDY0iPV9AzFinLz4BOLrPC-jspJ4cUVibaJzGnfyTbz-x8BcRr11dUFTxTJqt05xANn9BkFu0jsepGwnQMw14IhtHMagEVno6YhttqYuGh_kCv_8fTLirczIz4_EyK8bMcGw48FQlw4cFT1EFr-C3Itk-VuQ00oak9_IsaMVRtDyF_AvOVWjJ5W4R9KOymsWtevCLH-hq9y-cJlncCzt0Lk9UG8u8RoYw_WyD2pUBVW5w"/>
+<span class="material-symbols-outlined text-primary text-4xl">add_a_photo</span>
+<p class="text-on-surface-variant font-medium text-sm px-4">اضغط لتحميل صورة العرض الترويجية</p>
+</div>
+<p class="mt-4 text-xs text-on-secondary-fixed-variant leading-relaxed">يفضل استخدام صور عالية الجودة بمقاس 1080x1080 بكسل</p>
+</div>
+<div class="bg-primary-fixed/30 rounded-xl p-6">
+<h3 class="font-bold text-on-primary-fixed-variant mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">tips_and_updates</span>
+                        نصيحة الخبراء
+                    </h3>
+<p class="text-sm text-on-primary-fixed-variant leading-relaxed opacity-80">
+                        العروض التي تحتوي على صور احترافية تحقق نسبة نقر أعلى بـ 40% من العروض النصية فقط.
+                    </p>
+</div>
+</div>
+<!-- Right Column: Form Fields -->
+<div class="md:col-span-8 space-y-6">
+<!-- Section 1: Basic Info -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0_20px_40px_rgba(25,28,29,0.04)] space-y-8">
+<!-- Offer Title -->
+<div class="relative group">
+<label class="block text-sm font-bold text-on-surface-variant mb-2">عنوان العرض</label>
+<input class="w-full bg-surface-container-highest/50 border-none rounded-lg p-4 text-on-surface placeholder:text-on-surface-variant/40 focus:ring-0 transition-all" placeholder="مثال: خصم نهاية الأسبوع للمأكولات البحرية" type="text"/>
+<div class="focus-line absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-primary"></div>
+</div>
+<!-- Offer Type Chips -->
+<div>
+<label class="block text-sm font-bold text-on-surface-variant mb-4">نوع العرض</label>
+<div class="flex flex-wrap gap-3">
+<button class="px-5 py-2.5 rounded-full bg-primary text-on-primary font-medium flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">percent</span>
+                                خصم مئوي
+                            </button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface-variant font-medium flex items-center gap-2 text-sm hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-lg">restaurant</span>
+                                طبق مجاني
+                            </button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface-variant font-medium flex items-center gap-2 text-sm hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-lg">stars</span>
+                                نقاط ولاء
+                            </button>
+</div>
+</div>
+<!-- Value and Code Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="relative group">
+<label class="block text-sm font-bold text-on-surface-variant mb-2">قيمة الخصم</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest/50 border-none rounded-lg p-4 text-on-surface placeholder:text-on-surface-variant/40 focus:ring-0" placeholder="0.00" type="number"/>
+<span class="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-primary">%</span>
+</div>
+</div>
+<div class="relative group">
+<label class="block text-sm font-bold text-on-surface-variant mb-2">كود الخصم</label>
+<input class="w-full bg-surface-container-highest/50 border-none rounded-lg p-4 text-on-surface placeholder:text-on-surface-variant/40 focus:ring-0 font-mono tracking-widest uppercase" placeholder="WKD40" type="text"/>
+</div>
+</div>
+</div>
+<!-- Section 2: Target & Dates -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0_20px_40px_rgba(25,28,29,0.04)] space-y-8">
+<!-- Target Audience -->
+<div>
+<label class="block text-sm font-bold text-on-surface-variant mb-4">الفئة المستهدفة</label>
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed-variant border border-secondary/10 flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                الكل
+                            </button>
+<button class="px-4 py-2 rounded-lg bg-surface-container-low text-on-surface-variant border border-outline-variant/20 flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-sm">crown</span>
+                                العملاء الـ VIP
+                            </button>
+<button class="px-4 py-2 rounded-lg bg-surface-container-low text-on-surface-variant border border-outline-variant/20 flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-sm">person_add</span>
+                                العملاء الجدد
+                            </button>
+</div>
+</div>
+<!-- Dates -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="relative group">
+<label class="block text-sm font-bold text-on-surface-variant mb-2">تاريخ البدء</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest/50 border-none rounded-lg p-4 text-on-surface focus:ring-0" type="date"/>
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant pointer-events-none">calendar_today</span>
+</div>
+</div>
+<div class="relative group">
+<label class="block text-sm font-bold text-on-surface-variant mb-2">تاريخ الانتهاء</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest/50 border-none rounded-lg p-4 text-on-surface focus:ring-0" type="date"/>
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant pointer-events-none">event_busy</span>
+</div>
+</div>
+</div>
+<!-- Terms -->
+<div class="relative group">
+<label class="block text-sm font-bold text-on-surface-variant mb-2">الشروط والأحكام</label>
+<textarea class="w-full bg-surface-container-highest/50 border-none rounded-lg p-4 text-on-surface placeholder:text-on-surface-variant/40 focus:ring-0 resize-none" placeholder="اكتب الشروط هنا... (مثال: لا يسري العرض مع عروض أخرى)" rows="4"></textarea>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row-reverse gap-4 pt-4">
+<button class="flex-1 bg-gradient-to-br from-primary to-primary-container text-on-primary py-4 px-8 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+                        حفظ ونشر العرض
+                    </button>
+<button class="flex-1 bg-secondary-container text-on-secondary-container py-4 px-8 rounded-full font-bold hover:bg-secondary-container/80 active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">drafts</span>
+                        حفظ كمسودة
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-[#191C1D]/15 shadow-[0_-10px_30px_rgba(25,28,29,0.04)] rounded-t-2xl">
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-1.5 hover:text-[#944A00] dark:hover:text-orange-300 transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-1.5 hover:text-[#944A00] dark:hover:text-orange-300 transition-colors" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium mt-1">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#FFDCC5] dark:bg-orange-900/30 text-[#944A00] dark:text-orange-200 rounded-2xl px-5 py-1.5 scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_offer</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold mt-1">Offers</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-1.5 hover:text-[#944A00] dark:hover:text-orange-300 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium mt-1">Guests</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-1.5 hover:text-[#944A00] dark:hover:text-orange-300 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium mt-1">Settings</span>
+</a>
+</nav>
+</body></html>
