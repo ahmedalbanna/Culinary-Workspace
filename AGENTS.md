@@ -192,6 +192,35 @@ We abandon traditional "drop shadows" in favor of **Tonal Layering** and **Ambie
 ### `useSearchParams` in Next.js App Router Client Components
 - `useSearchParams()` must be wrapped in `<Suspense>` at the page level when used inside a client component in the App Router, otherwise Next.js throws a build-time error about missing Suspense boundaries.
 - **Fix:** Extract the component using `useSearchParams` into a separate inner component, then wrap it in `<Suspense>` in the default export of the page file.
+- **Conditional section pattern:** When a server page needs a section that conditionally renders based on a search param (e.g. `?view=calendar`), extract it into a dedicated `*-list-section.tsx` file that reads the param and returns `null` when inactive. Import and wrap in `<Suspense>` in the page. This keeps server pages clean and avoids mixing client/server logic.
+
+### `find_and_replace_code` — Exact Whitespace Matching
+- `find_and_replace_code` requires an **exact character-for-character match** including trailing whitespace and newline style. Even a single extra newline or missing space causes `No matches found`.
+- **Fix:** Before doing a large replacement on a file you haven't recently viewed, use `expand_code_chunks` on the target line range first to confirm the exact text. Alternatively, keep `find` strings short and anchor to a unique surrounding line to reduce mismatch risk.
+
+### Import Placement in TypeScript/Next.js Files
+- All `import` statements must appear at the **top of the file**, before any function or component definitions. Placing an import after a component (e.g. at the bottom as an afterthought) causes a TypeScript/build error.
+- When doing a large `find_and_replace_code` that restructures a file, double-check that any new imports needed are added to the **existing import block at the top**, not appended at the end of the replacement string.
+
+### Extracting Interactive Lists from Server Pages
+- The recommended pattern for adding live search/filter to a server-rendered list page:
+  1. Create `components/<domain>/<domain>-list.tsx` as a `'use client'` component that accepts `initial*` props and owns all filter/search/sort state via `useState` + `useMemo`.
+  2. Server page fetches data once and passes it as props — no extra API calls needed for filtering.
+  3. Wire SSE real-time updates inside the client component using `useRealtime` for live data mutation.
+  4. Replace the server-rendered list markup in the page with a single `<DomainList initialItems={items} />` call.
+- This pattern keeps pages lean, avoids prop-drilling, and makes each list independently testable.
+
+### `useRealtime` Hook API (this project)
+- Located at `hooks/use-realtime.ts`. Accepts a record of event-name → callback:
+  ```ts
+  useRealtime({
+    'order:updated':       (payload) => { ... },
+    'reservation:updated': (payload) => { ... },
+    'table:updated':       (payload) => { ... },
+  });
+  ```
+- Wraps callbacks in `useCallback` before passing to avoid stale closure issues and unnecessary effect re-runs.
+- The SSE bus (`lib/sse-bus.ts`) and event route (`app/api/events/route.ts`) are already set up — just consume `useRealtime` in any client component.
 
 ---
 
