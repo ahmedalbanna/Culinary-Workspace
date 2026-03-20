@@ -1,8 +1,9 @@
-import { Customer, DashboardSnapshot, Reservation, ReservationInput, ReservationStatus, ReservationUpdate } from '@/lib/types';
+import { Customer, DashboardSnapshot, Reservation, ReservationInput, ReservationStatus, ReservationUpdate, RestaurantTable, TableUpdate } from '@/lib/types';
 
 interface CRMStore {
   customers: Customer[];
   reservations: Reservation[];
+  tables: RestaurantTable[];
 }
 
 declare global {
@@ -82,6 +83,39 @@ const seedCustomers: Customer[] = [
   },
 ];
 
+const seedTables: RestaurantTable[] = [
+  // Patio (6 tables)
+  { id: 'tbl_P1', label: 'P1', zone: 'Patio', seats: 2, status: 'available', shape: 'round' },
+  { id: 'tbl_P2', label: 'P2', zone: 'Patio', seats: 6, status: 'reserved', shape: 'rectangle', currentGuestName: 'Layla Hassan', currentReservationId: 'res_1', estimatedTurnover: '22:00' },
+  { id: 'tbl_P3', label: 'P3', zone: 'Patio', seats: 4, status: 'available', shape: 'round' },
+  { id: 'tbl_P4', label: 'P4', zone: 'Patio', seats: 2, status: 'needs-cleaning', shape: 'round' },
+  { id: 'tbl_P5', label: 'P5', zone: 'Patio', seats: 4, status: 'available', shape: 'square' },
+  { id: 'tbl_P6', label: 'P6', zone: 'Patio', seats: 8, status: 'closed', shape: 'rectangle', notes: 'Under maintenance' },
+
+  // Window (5 tables)
+  { id: 'tbl_W1', label: 'W1', zone: 'Window', seats: 2, status: 'available', shape: 'round' },
+  { id: 'tbl_W2', label: 'W2', zone: 'Window', seats: 2, status: 'occupied', shape: 'round', currentGuestName: 'Ahmed Khalid', seatedAt: '08:00', estimatedTurnover: '09:00' },
+  { id: 'tbl_W3', label: 'W3', zone: 'Window', seats: 4, status: 'needs-cleaning', shape: 'square' },
+  { id: 'tbl_W4', label: 'W4', zone: 'Window', seats: 2, status: 'occupied', shape: 'round', currentGuestName: 'Omar Nasser', seatedAt: '08:30', estimatedTurnover: '09:15', currentReservationId: 'res_2' },
+  { id: 'tbl_W5', label: 'W5', zone: 'Window', seats: 4, status: 'available', shape: 'square' },
+
+  // Main Hall (8 tables)
+  { id: 'tbl_M1', label: 'M1', zone: 'Main Hall', seats: 4, status: 'available', shape: 'square' },
+  { id: 'tbl_M2', label: 'M2', zone: 'Main Hall', seats: 4, status: 'available', shape: 'square' },
+  { id: 'tbl_M3', label: 'M3', zone: 'Main Hall', seats: 6, status: 'occupied', shape: 'rectangle', currentGuestName: 'Family group', seatedAt: '12:00', estimatedTurnover: '13:30' },
+  { id: 'tbl_M4', label: 'M4', zone: 'Main Hall', seats: 4, status: 'available', shape: 'square' },
+  { id: 'tbl_M5', label: 'M5', zone: 'Main Hall', seats: 8, status: 'reserved', shape: 'rectangle', currentGuestName: 'Corporate booking', currentReservationId: 'res_4', estimatedTurnover: '22:30' },
+  { id: 'tbl_M6', label: 'M6', zone: 'Main Hall', seats: 2, status: 'available', shape: 'round' },
+  { id: 'tbl_M7', label: 'M7', zone: 'Main Hall', seats: 4, status: 'needs-cleaning', shape: 'square' },
+  { id: 'tbl_M8', label: 'M8', zone: 'Main Hall', seats: 4, status: 'occupied', shape: 'square', currentGuestName: 'Mina Farouk', seatedAt: '12:15', estimatedTurnover: '13:45', currentReservationId: 'res_3' },
+
+  // Chef Counter (4 seats)
+  { id: 'tbl_C1', label: 'C1', zone: 'Chef Counter', seats: 2, status: 'available', shape: 'square' },
+  { id: 'tbl_C2', label: 'C2', zone: 'Chef Counter', seats: 2, status: 'available', shape: 'square' },
+  { id: 'tbl_C3', label: 'C3', zone: 'Chef Counter', seats: 2, status: 'occupied', shape: 'square', currentGuestName: 'Chef experience pair', seatedAt: '20:00', estimatedTurnover: '22:00' },
+  { id: 'tbl_C4', label: 'C4', zone: 'Chef Counter', seats: 2, status: 'closed', shape: 'square', notes: 'Reserved for event' },
+];
+
 const seedReservations: Reservation[] = [
   {
     id: 'res_1',
@@ -150,6 +184,7 @@ function initStore(): CRMStore {
     globalThis.__culinaryCRMStore = {
       customers: clone(seedCustomers),
       reservations: clone(seedReservations),
+      tables: clone(seedTables),
     };
   }
 
@@ -233,3 +268,40 @@ export function getDashboardSnapshot(): DashboardSnapshot {
 }
 
 export const reservationStatuses: ReservationStatus[] = ['confirmed', 'seated', 'completed', 'waitlist'];
+
+// ─── Table helpers ───────────────────────────────────────────────────────────
+
+export function listTables(): RestaurantTable[] {
+  return clone(initStore().tables);
+}
+
+export function getTable(tableId: string): RestaurantTable | undefined {
+  return listTables().find((t) => t.id === tableId);
+}
+
+export function getTableByLabel(label: string): RestaurantTable | undefined {
+  return listTables().find((t) => t.label === label);
+}
+
+export function updateTable(tableId: string, update: TableUpdate): RestaurantTable | undefined {
+  const store = initStore();
+  const table = store.tables.find((t) => t.id === tableId);
+  if (!table) return undefined;
+  Object.assign(table, update);
+  return clone(table);
+}
+
+export function getTableSummary() {
+  const tables = listTables();
+  return {
+    total: tables.length,
+    available: tables.filter((t) => t.status === 'available').length,
+    occupied: tables.filter((t) => t.status === 'occupied').length,
+    reserved: tables.filter((t) => t.status === 'reserved').length,
+    needsCleaning: tables.filter((t) => t.status === 'needs-cleaning').length,
+    closed: tables.filter((t) => t.status === 'closed').length,
+    occupancyRate: Math.round(
+      (tables.filter((t) => t.status === 'occupied' || t.status === 'reserved').length / tables.length) * 100
+    ),
+  };
+}

@@ -89,3 +89,28 @@ export interface ReservationUpdate {
   notes?: string;
   occasion?: string;
 }
+
+export type TableStatus = 'available' | 'occupied' | 'reserved' | 'needs-cleaning' | 'closed';
+
+export interface RestaurantTable {
+  id: string;
+  label: string;
+  zone: TableZone;
+  seats: number;
+  status: TableStatus;
+  shape: 'round' | 'square' | 'rectangle';
+  currentGuestName?: string;
+  currentReservationId?: string;
+  seatedAt?: string;
+  estimatedTurnover?: string;
+  notes?: string;
+}
+
+export interface TableUpdate {
+  status?: TableStatus;
+  currentGuestName?: string;
+  currentReservationId?: string;
+  seatedAt?: string;
+  estimatedTurnover?: string;
+  notes?: string;
+}
