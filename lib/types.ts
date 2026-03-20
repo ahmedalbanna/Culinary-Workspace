@@ -115,6 +115,37 @@ export interface TableUpdate {
   notes?: string;
 }
 
+// ─── Menu ────────────────────────────────────────────────────────────────────
+
+export type MenuItemStatus = 'available' | 'out-of-stock' | 'hidden';
+export type MenuCategory = 'أطباق رئيسية' | 'مقبلات' | 'حلويات' | 'مشروبات' | 'سلطات' | 'فطور' | 'خبز وفطائر';
+
+export interface MenuItem {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  category: MenuCategory;
+  description: string;
+  price: number;
+  emoji: string;
+  imageUrl?: string;
+  prepTime: string;
+  status: MenuItemStatus;
+  isVipOnly: boolean;
+  isPopular: boolean;
+  allergens: string[];
+  tags: string[];
+}
+
+export interface MenuItemUpdate {
+  price?: number;
+  status?: MenuItemStatus;
+  description?: string;
+  prepTime?: string;
+  isVipOnly?: boolean;
+  isPopular?: boolean;
+}
+
 // ─── Orders ──────────────────────────────────────────────────────────────────
 
 export type OrderStatus = 'open' | 'served' | 'paid' | 'cancelled' | 'refunded';
