@@ -1,5 +1,6 @@
 import { listOrders, getOrdersSummary, getTopItems } from '@/lib/orders-store';
 import Link from 'next/link';
+import { OrdersList } from '@/components/orders/orders-list';
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; dot: string }> = {
   open:       { label: 'مفتوح',    color: 'bg-primary-container text-on-primary-container', dot: 'bg-primary animate-pulse' },
@@ -50,69 +51,10 @@ export default function OrdersPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Orders list */}
+        {/* Orders list — interactive client component */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="flex justify-between items-center flex-wrap gap-3">
-            <h3 className="headline-sm">سجل الطلبات</h3>
-            <div className="flex gap-2 flex-wrap">
-              {['الكل', 'مفتوح', 'مدفوع', 'ملغي'].map((f, i) => (
-                <button key={f} className={`px-4 py-1.5 rounded-full text-sm font-bold transition-colors ${i === 0 ? 'bg-primary text-on-primary' : 'bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container-high'}`}>
-                  {f}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            {orders.map(order => {
-              const sc = STATUS_CONFIG[order.status];
-              return (
-                <Link
-                  key={order.id}
-                  href={`/orders/${order.id}` as any}
-                  className="card surface-container-lowest p-5 flex items-center gap-5 hover:translate-y-[-2px] transition-transform group"
-                >
-                  {/* Status dot */}
-                  <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${sc.dot}`} />
-
-                  {/* Guest + table */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-bold truncate">{order.guestName}</h4>
-                      {order.notes && <span className="material-symbols-outlined text-primary text-sm" title={order.notes}>sticky_note_2</span>}
-                    </div>
-                    <p className="text-xs text-on-surface-variant">
-                      {order.date} {order.time} · طاولة {order.tableLabel} · {order.partySize} أفراد
-                    </p>
-                  </div>
-
-                  {/* Item emojis */}
-                  <div className="hidden md:flex -space-x-1 space-x-reverse">
-                    {order.items.slice(0, 4).map(item => (
-                      <div key={item.id} className="w-8 h-8 rounded-full bg-surface-container border-2 border-white flex items-center justify-center text-sm shadow-sm" title={item.nameAr}>
-                        {item.emoji}
-                      </div>
-                    ))}
-                    {order.items.length > 4 && (
-                      <div className="w-8 h-8 rounded-full bg-surface-container border-2 border-white flex items-center justify-center text-[10px] font-bold text-on-surface-variant shadow-sm">
-                        +{order.items.length - 4}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Total + status */}
-                  <div className="text-left flex-shrink-0 space-y-1">
-                    <p className="font-black text-primary">{fmt(order.total)}</p>
-                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-black block text-center ${sc.color}`}>
-                      {sc.label}
-                    </span>
-                  </div>
-
-                  <span className="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">chevron_left</span>
-                </Link>
-              );
-            })}
-          </div>
+          <h3 className="headline-sm">سجل الطلبات</h3>
+          <OrdersList initialOrders={orders} />
         </div>
 
         {/* Right panel: Top items + revenue */}
