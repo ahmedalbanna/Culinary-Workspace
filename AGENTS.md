@@ -146,6 +146,45 @@ We abandon traditional "drop shadows" in favor of **Tonal Layering** and **Ambie
 
 
 
+## 7. Implementation Notes (Technical)
+
+### Tailwind CSS Setup for This Project
+- **Always install Tailwind CSS v3** (`tailwindcss@3 postcss autoprefixer`) as a dev dependency. Do NOT rely on the Tailwind CDN — it cannot be purged and does not integrate with Next.js build.
+- The design token colors (all `primary`, `secondary`, `surface-*`, `error`, `outline-*` variants) must be registered in `tailwind.config.js` under `theme.extend.colors` so they are available as Tailwind classes (`bg-primary`, `text-on-surface-variant`, etc.).
+- Create `postcss.config.js` with `tailwindcss` and `autoprefixer` plugins. Without it, Next.js will not process Tailwind at all.
+- Put `@tailwind base; @tailwind components; @tailwind utilities;` at the top of `globals.css` **before** any `@import url(...)` rules to avoid PostCSS ordering warnings.
+
+### Next.js Typed Routes Gotcha
+- When `typedRoutes: true` is enabled in `next.config.mjs`, dynamic string hrefs like `href="/reservations/new"` or `href={item.href}` fail TypeScript because the type is `RouteImpl<string>` not `string`.
+- **Fix:** cast to `any` at usage site — `href={path as any}` — or disable `typedRoutes` if it causes too much friction across the codebase.
+
+### RTL + Font Strategy
+- The app is Arabic-first (`<html dir="rtl" lang="ar">`). Use **Tajawal** as the primary font family for Arabic and **Plus Jakarta Sans** for display/LTR contexts.
+- Set the font-family on `body` directly in CSS (not via Tailwind `fontFamily` alone) since Tailwind's `font-sans` class won't apply in `dir="rtl"` contexts without explicit overriding.
+- Use `border-inline-start` / `padding-inline-start` (logical CSS) instead of `border-left` / `padding-left` for sidebar borders and input padding to respect RTL layout automatically.
+
+### App Shell Layout Pattern
+- Use `height: 100dvh` (not `100vh`) on the app shell and sidebar to correctly handle iOS Safari's dynamic viewport with the address bar.
+- On mobile (< 1024px): sidebar `display: none`, bottom nav `display: flex`, main content gets `padding-bottom: 88px` to clear the nav bar.
+- Bottom nav should use `backdrop-filter: blur(20px)` + `background: rgba(255,255,255,0.88)` for the glass effect; add `padding-bottom: env(safe-area-inset-bottom, 0px)` for iPhone notch support.
+
+### Server Actions in Next.js App Router
+- Server actions (in `lib/actions.ts`) must have `'use server'` at the **top of the file**, not just on individual functions, when the file is not a component.
+- Calling `redirect()` from a server action automatically triggers a navigation — no need to return a response or use `router.push()`.
+- For status updates that need to reflect immediately in a client component (without a full page redirect), use `router.refresh()` after a `fetch` PATCH call instead of a server action.
+
+### In-Memory Store with `globalThis`
+- The `globalThis.__culinaryCRMStore` pattern works across Next.js server renders in dev mode because the Node.js process is persistent. In production with serverless/edge, this resets on cold starts — make clear this is a development-only persistence approach.
+
+### Page-to-Route Mapping from Design Files
+- When converting design HTML pages to Next.js routes: **variant pages** (`reservation_details_1`, `reservation_details_2`) should become a **single route** (`/reservations/[id]`) with tab/state variants, not separate routes.
+- **Action confirmations** (cancel, no-show, confirm arrival) should be modals/bottom sheets within the detail page, not separate routes, unless they require a distinct URL for deep-linking.
+- **Flow states** (success screens) can be separate routes (`/reservations/[id]/success`) to allow proper back-navigation handling.
+
+---
+
+
+
 ## 6. Do's and Don'ts
 
 
