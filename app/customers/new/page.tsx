@@ -20,15 +20,33 @@ export default function NewCustomerPage() {
   const [form, setForm] = useState({
     name: '', phone: '', email: '', birthday: '', notes: '', tier: 'New' as Tier,
   });
+  const [phoneError, setPhoneError] = useState('');
 
   function set(field: string, value: string) {
     setForm(prev => ({ ...prev, [field]: value }));
+    if (field === 'phone') setPhoneError('');
+  }
+
+  function validatePhone(raw: string): string {
+    const digits = raw.replace(/\D/g, '');
+    // Accept: 5XXXXXXXX (9 digits) or 05XXXXXXXX (10 digits) or +9665XXXXXXXX
+    const stripped = digits.replace(/^(966|0)/, '');
+    if (!stripped) return 'رقم الجوال مطلوب';
+    if (!/^5[0-9]{8}$/.test(stripped)) return 'يجب أن يبدأ الرقم بـ 5 ويتكوّن من 9 أرقام (مثال: 512345678)';
+    return '';
+  }
+
+  function handlePhoneBlur() {
+    const err = validatePhone(form.phone);
+    setPhoneError(err);
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.name.trim() || !form.phone.trim()) {
-      setError('الاسم ورقم الجوال مطلوبان');
+    const pErr = validatePhone(form.phone);
+    if (pErr) { setPhoneError(pErr); return; }
+    if (!form.name.trim()) {
+      setError('الاسم الكامل مطلوب');
       return;
     }
     setLoading(true);
@@ -97,17 +115,32 @@ export default function NewCustomerPage() {
                 {/* Phone */}
                 <div className="space-y-1.5">
                   <label className="block text-sm font-bold text-on-surface-variant">رقم الجوال *</label>
-                  <div className="flex items-center input-field p-0 overflow-hidden">
-                    <span className="px-4 text-on-surface-variant text-sm border-e border-outline-variant py-3.5 flex-shrink-0">+966</span>
+                  <div className={`flex items-center input-field p-0 overflow-hidden transition-colors ${phoneError ? 'ring-2 ring-error bg-error-container/10' : ''}`}>
+                    <span className={`px-4 text-sm border-e py-3.5 flex-shrink-0 ${phoneError ? 'text-error border-error/40' : 'text-on-surface-variant border-outline-variant'}`}>+966</span>
                     <input
                       type="tel"
                       dir="ltr"
                       value={form.phone}
                       onChange={e => set('phone', e.target.value)}
+                      onBlur={handlePhoneBlur}
                       placeholder="5XXXXXXXX"
+                      maxLength={12}
+                      inputMode="numeric"
                       className="flex-1 bg-transparent border-none py-3.5 px-3 focus:ring-0 text-sm"
                     />
+                    {form.phone && !phoneError && /^5[0-9]{8}$/.test(form.phone.replace(/\D/g, '').replace(/^(966|0)/, '')) && (
+                      <span className="material-symbols-outlined text-green-600 pe-3" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    )}
                   </div>
+                  {phoneError && (
+                    <p className="text-xs text-error flex items-center gap-1 mt-1">
+                      <span className="material-symbols-outlined text-sm">error</span>
+                      {phoneError}
+                    </p>
+                  )}
+                  {!phoneError && form.phone && (
+                    <p className="text-[10px] text-on-surface-variant/60">سيتم حفظه بصيغة: +966{form.phone.replace(/\D/g, '').replace(/^(966|0)/, '')}</p>
+                  )}
                 </div>
 
                 {/* Birthday */}
