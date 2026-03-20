@@ -232,6 +232,42 @@ export function createLeaveRequest(input: Omit<LeaveRequest, 'id' | 'submittedAt
   return clone(req);
 }
 
+export function addStaffReview(
+  staffId: string,
+  review: Omit<import('@/lib/types').ReviewEntry, 'id'>
+): import('@/lib/types').StaffMember | undefined {
+  const store = initStaffStore();
+  const member = store.staff.find(s => s.id === staffId);
+  if (!member) return undefined;
+  const newReview: import('@/lib/types').ReviewEntry = {
+    ...review,
+    id: `rev_${Date.now()}`,
+  };
+  member.reviews.unshift(newReview);
+  // Recalculate rating average
+  const avg = member.reviews.reduce((s, r) => s + r.rating, 0) / member.reviews.length;
+  member.rating = Math.round(avg * 10) / 10;
+  // Recalculate performance score (weighted: reviews 40% + existing 60%)
+  member.performanceScore = Math.min(100, Math.round(member.performanceScore * 0.6 + (avg / 5) * 100 * 0.4));
+  return clone(member);
+}
+
+export function updateStaffShift(
+  staffId: string,
+  day: string,
+  update: Partial<import('@/lib/types').ShiftEntry>
+): import('@/lib/types').StaffMember | undefined {
+  const store = initStaffStore();
+  const member = store.staff.find(s => s.id === staffId);
+  if (!member) return undefined;
+  const shift = member.rota.find(s => s.day === day);
+  if (!shift) return undefined;
+  Object.assign(shift, update);
+  // If type is 'off', clear times
+  if (update.type === 'off') { shift.start = ''; shift.end = ''; }
+  return clone(member);
+}
+
 export function getStaffSummary() {
   const staff = listStaff();
   const leaves = getPendingLeaveRequests();
