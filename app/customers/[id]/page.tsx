@@ -98,7 +98,9 @@ export default function CustomerDetailPage({ params }: { params: { id: string } 
                   <span className="material-symbols-outlined text-primary">receipt_long</span>
                   تاريخ الطلبات
                 </h3>
-                <span className="label-md text-on-surface-variant">{orders.length} طلب</span>
+                <Link href={`/customers/${customer.id}/orders` as any} className="text-sm text-primary font-bold hover:underline flex items-center gap-1">
+                عرض الكل <span className="material-symbols-outlined text-base">arrow_back</span>
+              </Link>
               </div>
               <div className="divide-y divide-outline-variant">
                 {orders.map(order => (

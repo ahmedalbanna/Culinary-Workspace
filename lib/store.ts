@@ -269,6 +269,39 @@ export function getDashboardSnapshot(): DashboardSnapshot {
 
 export const reservationStatuses: ReservationStatus[] = ['confirmed', 'seated', 'completed', 'waitlist'];
 
+// ─── Customer helpers ─────────────────────────────────────────────────────────
+
+export interface NewCustomerInput {
+  name: string;
+  phone: string;
+  email: string;
+  tier: 'VIP' | 'Loyal' | 'New';
+  notes: string;
+  birthday?: string;
+}
+
+export function createCustomer(input: NewCustomerInput): Customer {
+  const store = initStore();
+  const id = `cust_${Date.now()}`;
+  const customer: Customer = {
+    id,
+    name: input.name,
+    phone: input.phone,
+    email: input.email,
+    tier: input.tier,
+    favoriteItems: [],
+    preferences: [],
+    allergies: [],
+    notes: input.notes,
+    lifetimeSpend: 0,
+    lastVisit: new Date().toISOString().slice(0, 10),
+    orderHistory: [],
+    offers: [],
+  };
+  store.customers.push(customer);
+  return clone(customer);
+}
+
 // ─── Table helpers ───────────────────────────────────────────────────────────
 
 export function listTables(): RestaurantTable[] {

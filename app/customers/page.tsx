@@ -26,10 +26,10 @@ export default function CustomersPage() {
             <span className="material-symbols-outlined text-base">download</span>
             تصدير
           </button>
-          <button className="btn-primary">
+          <Link href={'/customers/new' as any} className="btn-primary">
             <span className="material-symbols-outlined text-base">person_add</span>
             إضافة عميل
-          </button>
+          </Link>
         </div>
       </header>
 

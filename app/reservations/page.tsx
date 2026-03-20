@@ -1,6 +1,8 @@
 import { listReservations, listCustomers } from '@/lib/store';
 import Link from 'next/link';
 import { ConfirmArrivalButton } from '@/components/reservations/confirm-arrival-button';
+import { Suspense } from 'react';
+import { ReservationsViewToggle, CalendarSection } from '@/components/reservations/reservations-view-toggle';
 
 const statusLabels: Record<string, string> = { confirmed: 'مؤكد', seated: 'جالس', completed: 'مكتمل', waitlist: 'انتظار' };
 const zoneLabels: Record<string, string> = { Patio: 'التراس', Window: 'النوافذ', 'Main Hall': 'القاعة', 'Chef Counter': 'الشيف' };
@@ -19,17 +21,20 @@ export default function ReservationsPage() {
           <p className="page-subtitle">إدارة جميع الحجوزات والمواعيد</p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
-          {/* View toggle */}
-          <div className="flex bg-surface-container rounded-full p-1 gap-1">
-            <button className="px-5 py-2 rounded-full bg-surface-container-lowest shadow-card text-sm font-bold text-on-surface">قائمة</button>
-            <button className="px-5 py-2 rounded-full text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-colors">تقويم</button>
-          </div>
+          <Suspense fallback={null}>
+            <ReservationsViewToggle reservations={reservations} />
+          </Suspense>
           <Link href={'/reservations/new' as any} className="btn-primary">
             <span className="material-symbols-outlined">add</span>
             حجز جديد
           </Link>
         </div>
       </header>
+
+      {/* Calendar view (shown when ?view=calendar) */}
+      <Suspense fallback={null}>
+        <CalendarSection reservations={reservations} />
+      </Suspense>
 
       {/* Filter bar */}
       <div className="card-low p-3 sm:p-4 flex flex-col sm:flex-row gap-3 sm:items-center">

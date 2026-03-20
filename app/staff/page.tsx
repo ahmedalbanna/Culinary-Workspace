@@ -56,7 +56,7 @@ export default function StaffPage() {
       </div>
 
       {/* Quick access modules */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Link href="/staff/rota" className="card surface-container-lowest p-6 flex gap-4 items-center group hover:bg-primary-container/10 transition-colors">
           <div className="w-14 h-14 rounded-2xl bg-primary-container flex items-center justify-center text-primary">
             <span className="material-symbols-outlined text-3xl">calendar_month</span>
@@ -74,6 +74,16 @@ export default function StaffPage() {
           <div className="flex-1">
             <h3 className="title-lg">الرواتب</h3>
             <p className="text-sm text-on-surface-variant">كشف الرواتب — {fmt(summary.totalPayroll)} شهرياً</p>
+          </div>
+          <span className="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">chevron_left</span>
+        </Link>
+        <Link href="/staff/preparation" className="card surface-container-lowest p-6 flex gap-4 items-center group hover:bg-primary-container/10 transition-colors">
+          <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-700">
+            <span className="material-symbols-outlined text-3xl">supervisor_account</span>
+          </div>
+          <div className="flex-1">
+            <h3 className="title-lg">تجهيز الطاقم</h3>
+            <p className="text-sm text-on-surface-variant">توزيع المهام والمناطق للمناوبة الحالية</p>
           </div>
           <span className="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">chevron_left</span>
         </Link>
