@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import type { MenuItem, MenuCategory, MenuItemStatus } from '@/lib/types';
 
 const ALL_CATEGORIES: MenuCategory[] = ['أطباق رئيسية', 'مقبلات', 'سلطات', 'حلويات', 'مشروبات', 'فطور', 'خبز وفطائر'];
@@ -21,12 +21,27 @@ interface Props {
   };
 }
 
+const STATUS_CYCLE: MenuItemStatus[] = ['available', 'out-of-stock', 'hidden'];
+const STATUS_NEXT: Record<MenuItemStatus, MenuItemStatus> = {
+  available: 'out-of-stock', 'out-of-stock': 'hidden', hidden: 'available',
+};
+
 export function MenuClient({ items: initialItems, summary }: Props) {
   const [items, setItems] = useState(initialItems);
   const [activeCategory, setActiveCategory] = useState<MenuCategory | 'all'>('all');
   const [search, setSearch] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [updating, setUpdating] = useState<string | null>(null);
+  const [editItem, setEditItem] = useState<MenuItem | null>(null);
+  const [editForm, setEditForm] = useState<Partial<MenuItem>>({});
+  const [editSaving, setEditSaving] = useState(false);
+  const [savedMsg, setSavedMsg] = useState('');
+  // Inline price edit
+  const [priceEdit, setPriceEdit] = useState<string | null>(null);
+  const [priceVal, setPriceVal] = useState('');
+  // Drag reorder
+  const dragId = useRef<string | null>(null);
+  const dragOver = useRef<string | null>(null);
 
   // New dish form state
   const [newDish, setNewDish] = useState({
@@ -43,19 +58,61 @@ export function MenuClient({ items: initialItems, summary }: Props) {
     });
   }, [items, activeCategory, search]);
 
-  async function toggleStatus(item: MenuItem) {
-    const newStatus: MenuItemStatus = item.status === 'available' ? 'out-of-stock' : 'available';
-    setUpdating(item.id);
-    const res = await fetch(`/api/menu/${item.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: newStatus }),
+  async function patchItem(id: string, update: Partial<MenuItem>) {
+    setUpdating(id);
+    const res = await fetch(`/api/menu/${id}`, {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(update),
     });
     if (res.ok) {
       const data = await res.json() as { item: MenuItem };
-      setItems(prev => prev.map(i => i.id === item.id ? data.item : i));
+      setItems(prev => prev.map(i => i.id === id ? data.item : i));
+      setSavedMsg('تم الحفظ'); setTimeout(() => setSavedMsg(''), 2000);
     }
     setUpdating(null);
+    return res.ok;
+  }
+
+  function cycleStatus(item: MenuItem) {
+    patchItem(item.id, { status: STATUS_NEXT[item.status] });
+  }
+
+  function openEdit(item: MenuItem) {
+    setEditItem(item);
+    setEditForm({ nameAr: item.nameAr, nameEn: item.nameEn, description: item.description, price: item.price, prepTime: item.prepTime, isVipOnly: item.isVipOnly, isPopular: item.isPopular, status: item.status });
+  }
+
+  async function saveEdit() {
+    if (!editItem) return;
+    setEditSaving(true);
+    const ok = await patchItem(editItem.id, editForm);
+    if (ok) setEditItem(null);
+    setEditSaving(false);
+  }
+
+  async function savePrice(item: MenuItem) {
+    const parsed = parseFloat(priceVal);
+    if (!isNaN(parsed) && parsed > 0 && parsed !== item.price) {
+      await patchItem(item.id, { price: parsed });
+    }
+    setPriceEdit(null);
+  }
+
+  // Drag-to-reorder (within same category)
+  function handleDragStart(id: string) { dragId.current = id; }
+  function handleDragOver(e: React.DragEvent, id: string) { e.preventDefault(); dragOver.current = id; }
+  function handleDrop() {
+    const from = dragId.current; const to = dragOver.current;
+    if (!from || !to || from === to) return;
+    setItems(prev => {
+      const arr = [...prev];
+      const fromIdx = arr.findIndex(i => i.id === from);
+      const toIdx   = arr.findIndex(i => i.id === to);
+      if (fromIdx < 0 || toIdx < 0) return prev;
+      const [moved] = arr.splice(fromIdx, 1);
+      arr.splice(toIdx, 0, moved);
+      return arr;
+    });
+    dragId.current = null; dragOver.current = null;
   }
 
   async function handleAddDish(e: React.FormEvent) {
@@ -83,6 +140,13 @@ export function MenuClient({ items: initialItems, summary }: Props) {
 
   return (
     <div className="space-y-8">
+      {/* Saved flash */}
+      {savedMsg && (
+        <div className="fixed top-4 end-4 z-50 flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-green-100 text-green-700 text-sm font-bold shadow-ambient animate-in fade-in slide-in-from-top-2 duration-200">
+          <span className="material-symbols-outlined text-base">check_circle</span>{savedMsg}
+        </div>
+      )}
+
       {/* KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {[
@@ -144,10 +208,15 @@ export function MenuClient({ items: initialItems, summary }: Props) {
         {filtered.map(item => {
           const sc = STATUS_CONFIG[item.status];
           const isOutOfStock = item.status === 'out-of-stock';
+          const isHidden     = item.status === 'hidden';
           return (
             <article
               key={item.id}
-              className={`card surface-container-lowest overflow-hidden group relative flex flex-col ${isOutOfStock ? 'opacity-75' : 'hover:translate-y-[-4px]'} transition-all duration-300`}
+              draggable
+              onDragStart={() => handleDragStart(item.id)}
+              onDragOver={e => handleDragOver(e, item.id)}
+              onDrop={handleDrop}
+              className={`card surface-container-lowest overflow-hidden group relative flex flex-col transition-all duration-300 ${isOutOfStock || isHidden ? 'opacity-70' : 'hover:translate-y-[-4px]'} ${dragOver.current === item.id ? 'ring-2 ring-primary scale-[1.02]' : ''}`}
             >
               {/* Image / Emoji hero */}
               <div className={`relative h-48 w-full overflow-hidden flex-shrink-0 ${isOutOfStock ? 'grayscale-[0.6]' : ''}`}>
@@ -183,25 +252,65 @@ export function MenuClient({ items: initialItems, summary }: Props) {
 
               {/* Content */}
               <div className="p-5 flex flex-col flex-1">
-                <div className="flex justify-between items-start mb-2">
+                {/* Drag hint */}
+                <div className="absolute top-2 start-2 opacity-0 group-hover:opacity-60 transition-opacity cursor-grab active:cursor-grabbing">
+                  <span className="material-symbols-outlined text-white text-lg drop-shadow">drag_indicator</span>
+                </div>
+
+                <div className="flex justify-between items-start mb-2 gap-2">
                   <h3 className="font-bold text-on-surface text-lg leading-tight">{item.nameAr}</h3>
-                  <span className={`font-black text-primary flex-shrink-0 mr-2 ${isOutOfStock ? 'line-through opacity-50' : ''}`}>
-                    {fmt(item.price)}
-                  </span>
+                  {/* Inline price edit */}
+                  {priceEdit === item.id ? (
+                    <div className="flex items-center gap-1 flex-shrink-0">
+                      <input
+                        autoFocus type="number" min="1" value={priceVal}
+                        onChange={e => setPriceVal(e.target.value)}
+                        onBlur={() => savePrice(item)}
+                        onKeyDown={e => { if (e.key === 'Enter') savePrice(item); if (e.key === 'Escape') setPriceEdit(null); }}
+                        className="w-20 text-sm font-black text-primary border border-primary rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-primary"
+                        dir="ltr"
+                      />
+                      <span className="text-xs text-on-surface-variant">د</span>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => { setPriceEdit(item.id); setPriceVal(item.price.toString()); }}
+                      className={`font-black text-primary flex-shrink-0 hover:bg-primary-container/30 px-2 py-0.5 rounded-lg transition-colors group/price flex items-center gap-1 ${isOutOfStock ? 'line-through opacity-50' : ''}`}
+                      title="اضغط لتعديل السعر"
+                    >
+                      {fmt(item.price)}
+                      <span className="material-symbols-outlined text-xs opacity-0 group-hover/price:opacity-60">edit</span>
+                    </button>
+                  )}
                 </div>
                 <p className="text-on-surface-variant text-sm leading-relaxed flex-1 mb-5 line-clamp-2">{item.description}</p>
 
                 <div className="flex justify-between items-center pt-4 border-t border-outline-variant/20">
                   <div className="flex gap-2">
+                    {/* Status cycle button */}
                     <button
-                      onClick={() => toggleStatus(item)}
+                      onClick={() => cycleStatus(item)}
                       disabled={updating === item.id}
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors disabled:opacity-60 ${isOutOfStock ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-surface-container text-on-surface-variant hover:bg-error-container hover:text-error'}`}
-                      title={isOutOfStock ? 'إتاحة الطبق' : 'تعليق الطبق'}
+                      className={`px-3 py-2 rounded-xl flex items-center gap-1.5 text-xs font-bold transition-colors disabled:opacity-60 ${
+                        item.status === 'available'     ? 'bg-green-100 text-green-700 hover:bg-error-container hover:text-error' :
+                        item.status === 'out-of-stock'  ? 'bg-error-container text-error hover:bg-zinc-100 hover:text-zinc-600' :
+                                                          'bg-zinc-100 text-zinc-500 hover:bg-green-100 hover:text-green-700'
+                      }`}
+                      title={`الحالة التالية: ${STATUS_CONFIG[STATUS_NEXT[item.status]].label}`}
                     >
-                      <span className="material-symbols-outlined text-sm">{updating === item.id ? 'sync' : isOutOfStock ? 'check_circle' : 'block'}</span>
+                      <span className="material-symbols-outlined text-sm">
+                        {updating === item.id ? 'sync' :
+                         item.status === 'available' ? 'check_circle' :
+                         item.status === 'out-of-stock' ? 'block' : 'visibility_off'}
+                      </span>
+                      {STATUS_CONFIG[item.status].label}
                     </button>
-                    <button className="w-10 h-10 rounded-xl bg-surface-container text-on-surface-variant hover:bg-primary-fixed hover:text-primary transition-colors flex items-center justify-center">
+                    {/* Edit button */}
+                    <button
+                      onClick={() => openEdit(item)}
+                      className="w-9 h-9 rounded-xl bg-surface-container text-on-surface-variant hover:bg-primary-container/30 hover:text-primary transition-colors flex items-center justify-center"
+                      title="تعديل الطبق"
+                    >
                       <span className="material-symbols-outlined text-sm">edit</span>
                     </button>
                   </div>
@@ -227,6 +336,89 @@ export function MenuClient({ items: initialItems, summary }: Props) {
           <p className="text-on-surface-variant text-sm text-center">أضف المزيد من الخيارات الشهية لقائمة مطعمك.</p>
         </button>
       </div>
+
+      {/* ── Edit Item Panel ── */}
+      {editItem && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
+          style={{ background: 'rgba(25,28,29,0.5)', backdropFilter: 'blur(4px)' }}
+          onClick={() => setEditItem(null)}
+        >
+          <div className="w-full max-w-lg bg-surface-container-lowest rounded-3xl shadow-ambient overflow-hidden max-h-[90vh] overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-200"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-5 border-b border-outline-variant/20">
+              <h3 className="font-bold text-base flex items-center gap-2">
+                <span className="text-2xl">{editItem.emoji}</span>
+                تعديل: {editItem.nameAr}
+              </h3>
+              <button onClick={() => setEditItem(null)} className="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center">
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            <div className="p-5 space-y-4">
+              {/* Name */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-on-surface-variant">الاسم بالعربي</label>
+                <input value={editForm.nameAr ?? ''} onChange={e => setEditForm(f => ({ ...f, nameAr: e.target.value }))}
+                  className="input-field py-3 ps-4" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-on-surface-variant">السعر (درهم)</label>
+                  <input type="number" min="1" value={editForm.price ?? ''} onChange={e => setEditForm(f => ({ ...f, price: Number(e.target.value) }))}
+                    className="input-field py-3 ps-4" dir="ltr" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-on-surface-variant">وقت التحضير</label>
+                  <input value={editForm.prepTime ?? ''} onChange={e => setEditForm(f => ({ ...f, prepTime: e.target.value }))}
+                    placeholder="20 دقيقة" className="input-field py-3 ps-4" />
+                </div>
+              </div>
+              {/* Description */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-on-surface-variant">الوصف</label>
+                <textarea rows={2} value={editForm.description ?? ''} onChange={e => setEditForm(f => ({ ...f, description: e.target.value }))}
+                  className="input-field py-3 ps-4 resize-none" />
+              </div>
+              {/* Status */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-on-surface-variant">الحالة</label>
+                <div className="flex gap-2">
+                  {STATUS_CYCLE.map(s => (
+                    <button key={s} type="button" onClick={() => setEditForm(f => ({ ...f, status: s }))}
+                      className={`flex-1 py-2 rounded-2xl text-xs font-bold transition-all ${editForm.status === s ? 'ring-2 ring-primary bg-primary-fixed/20 text-primary' : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high'}`}>
+                      {STATUS_CONFIG[s].label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* VIP + Popular */}
+              <div className="flex gap-3">
+                {[
+                  { key: 'isVipOnly', label: 'VIP فقط', icon: 'star' },
+                  { key: 'isPopular', label: 'الأكثر طلباً', icon: 'local_fire_department' },
+                ].map(toggle => (
+                  <button key={toggle.key} type="button"
+                    onClick={() => setEditForm(f => ({ ...f, [toggle.key]: !(f as any)[toggle.key] }))}
+                    className={`flex-1 flex items-center gap-2 py-2.5 px-3 rounded-2xl text-xs font-bold transition-all ${(editForm as any)[toggle.key] ? 'bg-primary-container text-primary ring-2 ring-primary' : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high'}`}>
+                    <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: `'FILL' ${(editForm as any)[toggle.key] ? 1 : 0}` }}>{toggle.icon}</span>
+                    {toggle.label}
+                  </button>
+                ))}
+              </div>
+              {/* Actions */}
+              <div className="flex gap-3 pt-2">
+                <button onClick={() => setEditItem(null)} className="btn-ghost flex-1 py-3 rounded-full">إلغاء</button>
+                <button onClick={saveEdit} disabled={editSaving}
+                  className="btn-primary flex-1 py-3 rounded-full justify-center">
+                  {editSaving ? <span className="material-symbols-outlined animate-spin">progress_activity</span> : <span className="material-symbols-outlined">save</span>}
+                  {editSaving ? 'جاري الحفظ...' : 'حفظ التغييرات'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add Dish Modal */}
       {showAddForm && (

@@ -185,6 +185,11 @@ We abandon traditional "drop shadows" in favor of **Tonal Layering** and **Ambie
 - The `create_file` tool fails with `"Invalid JSON: EOF while parsing an object"` when `initial_content` is omitted entirely from the call (i.e. the tool call object is cut off before the closing brace). This happens when trying to fire too many large file-creation calls simultaneously.
 - **Fix:** Never leave a `create_file` call with no `initial_content` value — always provide the full content. If a batch is getting too long, split into two sequential tool-call groups rather than letting a call be truncated.
 
+### Store File Type Imports — Common Build Failure
+- When adding new functions to a store file (e.g. `lib/orders-store.ts`), always check the top-level `import type { ... }` line includes all types used by the new functions.
+- **Pattern:** A function like `updateOrderItems(id: string, items: OrderLineItem[])` requires `OrderLineItem` to be imported — easily missed when only `Order` and `OrderStatus` were imported before.
+- **Fix:** After adding store functions, scan the function signatures for any type references and verify they appear in the import. Build will fail with `Cannot find name 'X'` if missed.
+
 ### Multiple `globalThis` Stores Pattern
 - When a project grows to multiple domain areas (CRM, Staff, Marketing), avoid cramming all seed data into a single `globalThis` store object — it becomes unwieldy and causes merge conflicts between features.
 - **Pattern used here:** Create a separate store module per domain (`lib/store.ts`, `lib/staff-store.ts`, `lib/marketing-store.ts`), each with its own `globalThis.__culinary<Domain>Store` key. This keeps each file focused, independently testable, and easy to replace with a real DB later.
@@ -199,6 +204,7 @@ We abandon traditional "drop shadows" in favor of **Tonal Layering** and **Ambie
 - **Fix:** Before doing a large replacement on a file you haven't recently viewed, use `expand_code_chunks` on the target line range first to confirm the exact text. Alternatively, keep `find` strings short and anchor to a unique surrounding line to reduce mismatch risk.
 - **Large file complete rewrites:** When a component needs a complete rewrite (100+ lines changing), use `create_file` with `overwrite: true` instead of `find_and_replace_code`. This avoids JSON truncation from large `find` strings and is more reliable.
 - **`bash` fallback for file surgery:** When `find_and_replace_code` can't match a large block and `create_file` would be too big, use `bash` with `head -N file > /tmp/out.txt && cat >> /tmp/out.txt << 'EOF' ... EOF && cp /tmp/out.txt file` to truncate and rewrite from a known line number.
+- **Incremental approach for large interactive components:** When adding multiple features to a large existing client component (e.g. adding state, helpers, card UI changes, and a modal), break into 4-6 targeted `find_and_replace_code` calls rather than one full rewrite. This avoids JSON truncation and keeps each change auditable.
 
 ### `useRealtime` + `useCallback` Pattern
 - Callbacks passed to `useRealtime` **must** be wrapped in `useCallback` to avoid stale closures and infinite re-render loops. The hook stores a ref to handlers, but the dependency array still matters.
