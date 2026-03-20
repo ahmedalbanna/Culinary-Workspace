@@ -114,3 +114,75 @@ export interface TableUpdate {
   estimatedTurnover?: string;
   notes?: string;
 }
+
+// ─── Staff ────────────────────────────────────────────────────────────────────
+
+export type StaffRole = 'مدير' | 'رئيس نادل' | 'نادل' | 'طاهٍ' | 'طاهٍ مساعد' | 'استقبال' | 'صراف' | 'نظافة';
+export type StaffStatus = 'active' | 'on-leave' | 'off';
+
+export interface ShiftEntry {
+  day: string; // e.g. 'الأحد'
+  start: string; // '09:00'
+  end: string;   // '17:00'
+  type: 'morning' | 'evening' | 'split' | 'off';
+}
+
+export interface AttendanceRecord {
+  date: string;
+  checkIn: string;
+  checkOut: string;
+  lateMinutes: number;
+  status: 'present' | 'absent' | 'late' | 'leave';
+}
+
+export interface PayrollEntry {
+  month: string; // 'مارس 2026'
+  baseSalary: number;
+  overtime: number;
+  deductions: number;
+  bonus: number;
+  net: number;
+  isPaid: boolean;
+}
+
+export interface ReviewEntry {
+  id: string;
+  reviewerName: string;
+  date: string;
+  rating: number; // 1-5
+  comment: string;
+  category: 'service' | 'punctuality' | 'teamwork' | 'presentation';
+}
+
+export interface LeaveRequest {
+  id: string;
+  staffId: string;
+  type: 'annual' | 'sick' | 'emergency' | 'unpaid';
+  from: string;
+  to: string;
+  days: number;
+  reason: string;
+  status: 'pending' | 'approved' | 'rejected';
+  submittedAt: string;
+}
+
+export interface StaffMember {
+  id: string;
+  name: string;
+  nameEn: string;
+  role: StaffRole;
+  department: string;
+  phone: string;
+  email: string;
+  status: StaffStatus;
+  joinDate: string;
+  baseSalary: number;
+  avatar?: string;
+  rota: ShiftEntry[];
+  attendance: AttendanceRecord[];
+  payroll: PayrollEntry[];
+  reviews: ReviewEntry[];
+  leaveBalance: { annual: number; sick: number; used: number };
+  performanceScore: number; // 0-100
+  rating: number; // 1-5
+}

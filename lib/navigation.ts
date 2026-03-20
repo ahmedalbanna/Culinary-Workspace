@@ -12,7 +12,7 @@ export const mainNavItems: NavItem[] = [
   { label: 'Tables', href: '/tables', icon: 'table_restaurant', module: 'tables' },
   { label: 'Orders', href: '/orders', icon: 'receipt_long', module: 'orders' },
   { label: 'Marketing', href: '/marketing', icon: 'campaign', module: 'marketing' },
-  { label: 'Staff', href: '/staff', icon: 'badge', module: 'staff' },
+  { label: 'الموظفون', href: '/staff', icon: 'badge', module: 'staff' },
 ];
 
 export const bottomNavItems: NavItem[] = [
